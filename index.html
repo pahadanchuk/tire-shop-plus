@@ -7,11 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
             text-align: center;
-            margin: 0;
-            padding: 0;
         }
         header {
             background-color: #202123;
@@ -26,53 +22,54 @@
             margin: 0 auto;
         }
         .container {
-            max-width: 100%;
-            padding: 10px;
-        }
-        .search-bar {
-            margin-bottom: 20px;
-        }
-        input, select, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 5px;
-            border: 1px solid #ccc;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
             border-radius: 5px;
-        }
-        .search-button {
-            background-color: #FFD700;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 25px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
+            margin-top: 20px;
         }
         th, td {
             padding: 10px;
             border: 1px solid #ddd;
-            text-align: left;
-            font-size: 14px;
+            text-align: center;
         }
         th {
             background-color: #FFD700;
-            color: #000;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            border: 1px solid #000;
+        }
+        button {
+            background-color: #FFD700;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .contact-info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: black;
+            color: #FFD700;
+            border-radius: 5px;
+        }
+        .contact-info p, .contact-info a {
+            margin: 5px 0;
+            color: #FFD700;
+            font-size: 16px;
         }
         .footer {
-            background-color: #202123;
+            background-color: black;
             color: #FFD700;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .contact {
-            margin-top: 20px;
-        }
-        .contact a {
-            color: #FFD700;
-            font-weight: bold;
-            text-decoration: none;
+            padding: 10px;
+            font-size: 14px;
         }
         @media (max-width: 768px) {
             table {
@@ -85,121 +82,135 @@
     </style>
 </head>
 <body>
+    <header>
+        <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
+        <p>Tire Shop Plus - Best Tires at Affordable Prices</p>
+    </header>
 
-<header>
-    <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
-    <p>Tire Shop Plus - Best Tires at Affordable Prices</p>
-</header>
+    <div class="container">
+        <h2>Search for Tires</h2>
+        <div class="search-bar">
+            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
+            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
+            <select id="searchSeason">
+                <option value="">Select Season</option>
+                <option value="A/T">A/T</option>
+                <option value="A/S">A/S</option>
+                <option value="Wint">Wint</option>
+                <option value="M/T">M/T</option>
+                <option value="A/W">A/W</option>
+            </select>
+            <select id="searchCondition">
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+            </select>
+            <button onclick="filterTable()">Search</button>
+        </div>
 
-<div class="container">
-    <h2>Search for Tires</h2>
-    <div class="search-bar">
-        <input type="text" id="searchSize" placeholder="Enter size (e.g., 2055516)" oninput="filterTable()">
-        <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="filterTable()">
-        <select id="searchSeason" onchange="filterTable()">
-            <option value="">Select Season</option>
-            <option value="Winter">Winter</option>
-            <option value="All Season">All Season</option>
-            <option value="Summer">Summer</option>
-        </select>
-        <select id="searchCondition" onchange="filterTable()">
-            <option value="">Select Condition</option>
-            <option value="New">New</option>
-            <option value="Used">Used</option>
-        </select>
-        <button class="search-button" onclick="filterTable()">Search</button>
+        <table id="tireTable">
+            <thead>
+                <tr>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Season</th>
+                    <th>Brand/Model</th>
+                    <th>Pieces</th>
+                    <th>New/Used</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
     </div>
 
-    <h2>Tire Catalog</h2>
-    <table id="tire-table">
-        <tr>
-            <th>Size</th>
-            <th>Price</th>
-            <th>Season</th>
-            <th>Brand/Model</th>
-            <th>Pieces</th>
-            <th>New/Used</th>
-        </tr>
-    </table>
-</div>
+    <div class="contact-info">
+        <h2>Contact Us</h2>
+        <p>📞 <strong>+1 (780) 455-7467</strong></p>
+        <p>📧 <a href="mailto:tireshopplus@gmail.com">tireshopplus@gmail.com</a></p>
+        <p>⏰ <strong>Hours:</strong> Mon-Fri 8:30 AM - 5:30 PM | Sat 8:30 AM - 3:00 PM</p>
+    </div>
 
-<div class="container contact">
-    <h2>Contact Us</h2>
-    <p>📞 <a href="tel:+17804557467">+1 (780) 455-7467</a></p>
-    <p>📧 <a href="mailto:tiresshopplus@gmail.com">tiresshopplus@gmail.com</a></p>
-    <p>🕒 Hours: Mon-Fri 8:30 AM - 5:30 PM | Sat 8:30 AM - 3:00 PM</p>
-</div>
+    <div class="footer">
+        © 2024 Tire Shop Plus | 12530 118 Ave NW, Edmonton, AB T5L 2K6, Canada
+    </div>
 
-<div class="footer">
-    <p>© 2024 Tire Shop Plus | 12530 118 Ave NW, Edmonton, AB T5L 2K6, Canada</p>
-</div>
+    <script>
+        const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
+        const apiKey = "AIzaSyBMBdZuXKO4-ElH7o7Pn4SgGX9snxlJh5o";
+        const range = "Sheet1!A2:F";
 
-<script>
-    let tiresData = [];
-
-    async function fetchData() {
-        try {
-            const response = await fetch("https://sheets.googleapis.com/v4/spreadsheets/YOUR_SHEET_ID/values/Sheet1!A2:F?key=YOUR_API_KEY");
-            const data = await response.json();
-
-            if (data.values) {
-                tiresData = data.values.map(row => ({
-                    size: row[0] || "",
-                    price: row[1] || "",
-                    season: row[2] || "",
-                    brand: row[3] || "",
-                    pieces: row[4] || "",
-                    condition: row[5] || ""
-                }));
-
-                filterTable(); // Оновити таблицю після отримання даних
+        async function fetchData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Received Data:", data);
+                if (data.values) {
+                    renderTable(data.values);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
-        } catch (error) {
-            console.error("Error fetching data:", error);
         }
-    }
 
-    function filterTable() {
-        let sizeFilter = document.getElementById("searchSize").value.toLowerCase();
-        let brandFilter = document.getElementById("searchBrand").value.toLowerCase();
-        let seasonFilter = document.getElementById("searchSeason").value.toLowerCase();
-        let conditionFilter = document.getElementById("searchCondition").value.toLowerCase();
+        function renderTable(rows) {
+            let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
 
-        let table = document.getElementById("tire-table");
-        table.innerHTML = `
-            <tr>
-                <th>Size</th>
-                <th>Price</th>
-                <th>Season</th>
-                <th>Brand/Model</th>
-                <th>Pieces</th>
-                <th>New/Used</th>
-            </tr>`;
+            rows.forEach(row => {
+                let tr = `<tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td>${row[4]}</td>
+                    <td>${row[5]}</td>
+                </tr>`;
+                tableBody.innerHTML += tr;
+            });
+        }
 
-        let filteredTires = tiresData.filter(tire => 
-            (sizeFilter ? tire.size.toLowerCase().includes(sizeFilter) : true) &&
-            (brandFilter ? tire.brand.toLowerCase().includes(brandFilter) : true) &&
-            (seasonFilter ? tire.season.toLowerCase().includes(seasonFilter) : true) &&
-            (conditionFilter ? tire.condition.toLowerCase().includes(conditionFilter) : true)
-        );
+        function filterTable() {
+            let sizeInput = document.getElementById("searchSize").value.toLowerCase();
+            let brandInput = document.getElementById("searchBrand").value.toLowerCase();
+            let seasonInput = document.getElementById("searchSeason").value;
+            let conditionInput = document.getElementById("searchCondition").value;
 
-        filteredTires.forEach(tire => {
-            let row = `<tr>
-                <td>${tire.size}</td>
-                <td>${tire.price}</td>
-                <td>${tire.season}</td>
-                <td>${tire.brand}</td>
-                <td>${tire.pieces}</td>
-                <td>${tire.condition}</td>
-            </tr>`;
-            table.innerHTML += row;
-        });
-    }
+            let table = document.getElementById("tireTable");
+            let rows = table.getElementsByTagName("tr");
 
-    document.addEventListener("DOMContentLoaded", async () => {
-        await fetchData();
-    });
-</script>
+            for (let i = 1; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName("td");
+                let size = cells[0].textContent.toLowerCase();
+                let season = cells[2].textContent;
+                let brand = cells[3].textContent.toLowerCase();
+                let condition = cells[5].textContent;
 
+                let show = true;
+
+                if (sizeInput && !size.includes(sizeInput)) {
+                    show = false;
+                }
+                if (brandInput && !brand.startsWith(brandInput)) {
+                    show = false;
+                }
+                if (seasonInput && season !== seasonInput) {
+                    show = false;
+                }
+                if (conditionInput && condition !== conditionInput) {
+                    show = false;
+                }
+
+                rows[i].style.display = show ? "" : "none";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchData);
+    </script>
 </body>
 </html>
