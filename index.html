@@ -91,9 +91,9 @@
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
-            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)" oninput="filterTable()">
-            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="filterTable()">
-            <select id="searchSeason" onchange="filterTable()">
+            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)" oninput="saveFilters(); filterTable();">
+            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="saveFilters(); filterTable();">
+            <select id="searchSeason" onchange="saveFilters(); filterTable();">
                 <option value="">Select Season</option>
                 <option value="A/T">A/T</option>
                 <option value="A/S">A/S</option>
@@ -101,7 +101,7 @@
                 <option value="M/T">M/T</option>
                 <option value="A/W">A/W</option>
             </select>
-            <select id="searchCondition" onchange="filterTable()">
+            <select id="searchCondition" onchange="saveFilters(); filterTable();">
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
                 <option value="Used">Used</option>
@@ -168,7 +168,8 @@
                 tableBody.innerHTML += tr;
             });
 
-            filterTable(); // Застосовуємо фільтри після оновлення даних
+            loadFilters(); // Завантажуємо фільтри після оновлення даних
+            filterTable();
         }
 
         function filterTable() {
@@ -196,6 +197,20 @@
 
                 rows[i].style.display = show ? "" : "none";
             }
+        }
+
+        function saveFilters() {
+            localStorage.setItem("searchSize", document.getElementById("searchSize").value);
+            localStorage.setItem("searchBrand", document.getElementById("searchBrand").value);
+            localStorage.setItem("searchSeason", document.getElementById("searchSeason").value);
+            localStorage.setItem("searchCondition", document.getElementById("searchCondition").value);
+        }
+
+        function loadFilters() {
+            document.getElementById("searchSize").value = localStorage.getItem("searchSize") || "";
+            document.getElementById("searchBrand").value = localStorage.getItem("searchBrand") || "";
+            document.getElementById("searchSeason").value = localStorage.getItem("searchSeason") || "";
+            document.getElementById("searchCondition").value = localStorage.getItem("searchCondition") || "";
         }
 
         document.addEventListener("DOMContentLoaded", () => {
