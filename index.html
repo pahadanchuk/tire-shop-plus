@@ -94,20 +94,20 @@
 <div class="container">
     <h2>Search for Tires</h2>
     <div class="search-bar">
-        <input type="text" id="searchSize" placeholder="Enter size (e.g., 2055516)" oninput="fetchFilteredData()">
-        <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="fetchFilteredData()">
-        <select id="searchSeason" onchange="fetchFilteredData()">
+        <input type="text" id="searchSize" placeholder="Enter size (e.g., 2055516)" oninput="filterTable()">
+        <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="filterTable()">
+        <select id="searchSeason" onchange="filterTable()">
             <option value="">Select Season</option>
             <option value="Winter">Winter</option>
             <option value="All Season">All Season</option>
             <option value="Summer">Summer</option>
         </select>
-        <select id="searchCondition" onchange="fetchFilteredData()">
+        <select id="searchCondition" onchange="filterTable()">
             <option value="">Select Condition</option>
             <option value="New">New</option>
             <option value="Used">Used</option>
         </select>
-        <button class="search-button" onclick="fetchFilteredData()">Search</button>
+        <button class="search-button" onclick="filterTable()">Search</button>
     </div>
 
     <h2>Tire Catalog</h2>
@@ -135,32 +135,15 @@
 </div>
 
 <script>
-    async function fetchFilteredData() {
-        let sizeFilter = document.getElementById("searchSize").value.toLowerCase();
-        let brandFilter = document.getElementById("searchBrand").value.toLowerCase();
+    let tiresData = [];
 
-        if (!sizeFilter && !brandFilter) {
-            document.getElementById("tire-table").innerHTML = `
-                <tr>
-                    <th>Size</th>
-                    <th>Price</th>
-                    <th>Season</th>
-                    <th>Brand/Model</th>
-                    <th>Pieces</th>
-                    <th>New/Used</th>
-                </tr>`;
-            return;
-        }
-
+    async function fetchData() {
         try {
             const response = await fetch("https://sheets.googleapis.com/v4/spreadsheets/YOUR_SHEET_ID/values/Sheet1!A2:F?key=YOUR_API_KEY");
             const data = await response.json();
 
             if (data.values) {
-                let filteredTires = data.values.filter(row => 
-                    (sizeFilter ? row[0]?.toLowerCase().startsWith(sizeFilter) : true) &&
-                    (brandFilter ? row[3]?.toLowerCase().includes(brandFilter) : true)
-                ).map(row => ({
+                tiresData = data.values.map(row => ({
                     size: row[0] || "",
                     price: row[1] || "",
                     season: row[2] || "",
@@ -168,34 +151,52 @@
                     pieces: row[4] || "",
                     condition: row[5] || ""
                 }));
-
-                let table = document.getElementById("tire-table");
-                table.innerHTML = `
-                    <tr>
-                        <th>Size</th>
-                        <th>Price</th>
-                        <th>Season</th>
-                        <th>Brand/Model</th>
-                        <th>Pieces</th>
-                        <th>New/Used</th>
-                    </tr>`;
-
-                filteredTires.forEach(tire => {
-                    let row = `<tr>
-                        <td>${tire.size}</td>
-                        <td>${tire.price}</td>
-                        <td>${tire.season}</td>
-                        <td>${tire.brand}</td>
-                        <td>${tire.pieces}</td>
-                        <td>${tire.condition}</td>
-                    </tr>`;
-                    table.innerHTML += row;
-                });
             }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
+
+    function filterTable() {
+        let sizeFilter = document.getElementById("searchSize").value.toLowerCase();
+        let brandFilter = document.getElementById("searchBrand").value.toLowerCase();
+        let seasonFilter = document.getElementById("searchSeason").value.toLowerCase();
+        let conditionFilter = document.getElementById("searchCondition").value.toLowerCase();
+
+        let table = document.getElementById("tire-table");
+        table.innerHTML = `
+            <tr>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Season</th>
+                <th>Brand/Model</th>
+                <th>Pieces</th>
+                <th>New/Used</th>
+            </tr>`;
+
+        let filteredTires = tiresData.filter(tire => 
+            (sizeFilter ? tire.size.toLowerCase().startsWith(sizeFilter) : true) &&
+            (brandFilter ? tire.brand.toLowerCase().includes(brandFilter) : true) &&
+            (seasonFilter ? tire.season.toLowerCase().includes(seasonFilter) : true) &&
+            (conditionFilter ? tire.condition.toLowerCase().includes(conditionFilter) : true)
+        );
+
+        filteredTires.forEach(tire => {
+            let row = `<tr>
+                <td>${tire.size}</td>
+                <td>${tire.price}</td>
+                <td>${tire.season}</td>
+                <td>${tire.brand}</td>
+                <td>${tire.pieces}</td>
+                <td>${tire.condition}</td>
+            </tr>`;
+            table.innerHTML += row;
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        await fetchData();
+    });
 </script>
 
 </body>
