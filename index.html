@@ -143,7 +143,7 @@
         const range = "Sheet1!A2:F";
 
         async function fetchData() {
-            const timestamp = new Date().getTime(); // Додаємо унікальний параметр для уникнення кешування
+            const timestamp = new Date().getTime(); // Унікальний параметр для уникнення кешування
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}&timestamp=${timestamp}`;
 
             try {
