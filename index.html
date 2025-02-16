@@ -139,11 +139,11 @@
 
     <script>
         const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
-        const apiKey = "AIzaSyBMBdZuXKO4-ElH7o7Pn4SgGX9snxlJh5o";
+        const apiKey = "AIzaSyCO_oPrrlrFKHCfdl8O63FNePgkf8e6BtE";
         const range = "Sheet1!A2:F";
 
         async function fetchData() {
-            const timestamp = new Date().getTime(); // Унікальний параметр для уникнення кешування
+            const timestamp = new Date().getTime(); // Додаємо унікальний параметр для уникнення кешування
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}&timestamp=${timestamp}`;
 
             try {
