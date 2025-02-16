@@ -151,6 +151,8 @@
                     pieces: row[4] || "",
                     condition: row[5] || ""
                 }));
+
+                filterTable(); // Оновити таблицю після отримання даних
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -175,7 +177,7 @@
             </tr>`;
 
         let filteredTires = tiresData.filter(tire => 
-            (sizeFilter ? tire.size.toLowerCase().startsWith(sizeFilter) : true) &&
+            (sizeFilter ? tire.size.toLowerCase().includes(sizeFilter) : true) &&
             (brandFilter ? tire.brand.toLowerCase().includes(brandFilter) : true) &&
             (seasonFilter ? tire.season.toLowerCase().includes(seasonFilter) : true) &&
             (conditionFilter ? tire.condition.toLowerCase().includes(conditionFilter) : true)
