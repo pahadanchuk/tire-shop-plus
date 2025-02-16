@@ -20,6 +20,7 @@
             max-width: 200px;
             display: block;
             margin: 0 auto;
+            padding: 10px;
         }
         .container {
             max-width: 1000px;
@@ -212,7 +213,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             fetchData();
-            setInterval(fetchData, 300000); // Оновлення кожні 5 хвилин (300000 мс)
+            setInterval(fetchData, 20000); // Оновлення кожні 20 секунд (20000 мс)
         });
     </script>
 </body>
