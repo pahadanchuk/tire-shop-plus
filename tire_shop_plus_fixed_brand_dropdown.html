@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tire Shop Plus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #202123;
+            color: #FFD700;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logo {
+            max-width: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 100%;
+            padding: 10px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #FFD700;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background-color: #FFD700;
+            color: #000;
+        }
+        .footer {
+            background-color: #202123;
+            color: #FFD700;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .contact {
+            margin-top: 20px;
+        }
+        .contact a {
+            color: #FFD700;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
+    <p>Tire Shop Plus - Best Tires at Affordable Prices</p>
+</header>
+
+<div class="container">
+    <h2>Search for Tires</h2>
+    <div class="search-bar">
+        <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
+        <select id="searchBrand">
+            <option value="">Select Brand</option>
+        </select>
+        <select id="searchSeason">
+            <option value="">Select Season</option>
+            <option value="Winter">Winter</option>
+            <option value="All Season">All Season</option>
+            <option value="Summer">Summer</option>
+        </select>
+        <select id="searchCondition">
+            <option value="">Select Condition</option>
+            <option value="New">New</option>
+            <option value="Used">Used</option>
+        </select>
+        <button onclick="filterTable()">Search</button>
+    </div>
+
+    <h2>Tire Catalog</h2>
+    <table id="tire-table">
+        <tr>
+            <th>Size</th>
+            <th>Price</th>
+            <th>Season</th>
+            <th>Brand/Model</th>
+            <th>Pieces</th>
+            <th>New/Used</th>
+        </tr>
+    </table>
+</div>
+
+<div class="container contact">
+    <h2>Contact Us</h2>
+    <p>📞 <a href="tel:+17804557467">+1 (780) 455-7467</a></p>
+    <p>📧 <a href="mailto:tiresshopplus@gmail.com">tiresshopplus@gmail.com</a></p>
+    <p>🕒 Hours: Mon-Fri 8:30 AM - 5:30 PM | Sat 8:30 AM - 3:00 PM</p>
+</div>
+
+<div class="footer">
+    <p>© 2024 Tire Shop Plus | 12530 118 Ave NW, Edmonton, AB T5L 2K6, Canada</p>
+</div>
+
+<script>
+    const sheetApiKey = "AIzaSyBOavw-wZQtjzWMdtd2Kij7-I7HUErFRr8";
+    const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
+    const range = "Sheet1!A2:F"; 
+
+    let tiresData = [];
+
+    async function fetchData() {
+        try {
+            const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${sheetApiKey}`);
+            const data = await response.json();
+
+            if (data.values) {
+                tiresData = data.values.map(row => ({
+                    size: row[0] || "",
+                    price: row[1] || "",
+                    season: row[2] || "",
+                    brand: row[3] || "",
+                    pieces: row[4] || "",
+                    condition: row[5] || ""
+                }));
+
+                updateBrandDropdown();
+                filterTable();
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    function updateBrandDropdown() {
+        let brandDropdown = document.getElementById("searchBrand");
+        brandDropdown.innerHTML = '<option value="">Select Brand</option>'; 
+
+        let brands = [...new Set(tiresData.map(tire => tire.brand))].sort();
+        brands.forEach(brand => {
+            let option = document.createElement("option");
+            option.value = brand;
+            option.textContent = brand;
+            brandDropdown.appendChild(option);
+        });
+    }
+
+    function filterTable() {
+        let sizeFilter = document.getElementById("searchSize").value.toLowerCase();
+        let brandFilter = document.getElementById("searchBrand").value.toLowerCase();
+        let seasonFilter = document.getElementById("searchSeason").value.toLowerCase();
+        let conditionFilter = document.getElementById("searchCondition").value.toLowerCase();
+
+        let filteredTires = tiresData.filter(tire => 
+            (!sizeFilter || tire.size.toLowerCase().includes(sizeFilter)) &&
+            (!brandFilter || tire.brand.toLowerCase() === brandFilter) &&
+            (!seasonFilter || tire.season.toLowerCase().includes(seasonFilter)) &&
+            (!conditionFilter || tire.condition.toLowerCase() === conditionFilter)
+        );
+
+        let table = document.getElementById("tire-table");
+        table.innerHTML = `
+            <tr>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Season</th>
+                <th>Brand/Model</th>
+                <th>Pieces</th>
+                <th>New/Used</th>
+            </tr>`;
+
+        filteredTires.forEach(tire => {
+            let row = `<tr>
+                <td>${tire.size}</td>
+                <td>${tire.price}</td>
+                <td>${tire.season}</td>
+                <td>${tire.brand}</td>
+                <td>${tire.pieces}</td>
+                <td>${tire.condition}</td>
+            </tr>`;
+            table.innerHTML += row;
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchData();
+        setInterval(fetchData, 3000); // Оновлення кожні 3 секунди
+    });
+</script>
+
+</body>
+</html>
