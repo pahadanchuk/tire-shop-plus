@@ -145,6 +145,7 @@
         async function fetchData() {
             const timestamp = new Date().getTime(); // Додаємо унікальний параметр для уникнення кешування
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}&timestamp=${timestamp}`;
+
             try {
                 const response = await fetch(url, { cache: "no-store" });
                 if (!response.ok) {
@@ -214,7 +215,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             fetchData();
-            setInterval(fetchData, 20000); // Примусове оновлення кожні 20 секунд
+            setInterval(fetchData, 5000); // Примусове оновлення кожні 5 секунд
         });
     </script>
 </body>
