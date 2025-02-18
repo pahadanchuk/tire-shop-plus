@@ -187,7 +187,7 @@
                 (!sizeInput || row[0].toLowerCase().includes(sizeInput)) &&
                 (!brandInput || row[3].toLowerCase().includes(brandInput)) &&
                 (!seasonInput || row[2] === seasonInput) &&
-                (!conditionInput || row[5].trim() === conditionInput)
+                (!conditionInput || row[5].trim().toLowerCase() === conditionInput.toLowerCase())
             );
 
             let tableBody = document.getElementById("tireTableBody");
