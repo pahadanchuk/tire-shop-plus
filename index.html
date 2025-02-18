@@ -137,7 +137,7 @@
     </div>
 
     <script>
-        let tireData = []; // Глобальний масив для зберігання даних
+        let tireData = []; // Глобальний масив для зберігання всіх шин
 
         async function fetchData() {
             const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
@@ -151,30 +151,25 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                tireData = data.values; // Зберігаємо дані локально
-                renderTable();
+                tireData = data.values; // Зберігаємо отримані дані
+                renderTable(tireData); // Одразу показуємо всі шини
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         }
 
-        function renderTable() {
+        function renderTable(data) {
             let tableBody = document.getElementById("tireTableBody");
-            tableBody.innerHTML = ""; // Очищаємо таблицю перед оновленням
-
-            tireData.forEach(row => {
-                let tr = `<tr>
+            tableBody.innerHTML = data.map(row => `
+                <tr>
                     <td>${row[0]}</td>
                     <td>${row[1]}</td>
                     <td>${row[2]}</td>
                     <td>${row[3]}</td>
                     <td>${row[4]}</td>
                     <td>${row[5]}</td>
-                </tr>`;
-                tableBody.innerHTML += tr;
-            });
-
-            filterTable(); // Фільтруємо після оновлення даних
+                </tr>
+            `).join("");
         }
 
         function filterTable() {
@@ -183,36 +178,19 @@
             let seasonInput = document.getElementById("searchSeason").value;
             let conditionInput = document.getElementById("searchCondition").value.trim().toLowerCase();
 
-            let tableBody = document.getElementById("tireTableBody");
-            tableBody.innerHTML = ""; // Очищаємо перед фільтрацією
+            let filteredData = tireData.filter(row => 
+                (!sizeInput || row[0].toLowerCase().includes(sizeInput)) &&
+                (!brandInput || row[3].toLowerCase().includes(brandInput)) &&
+                (!seasonInput || row[2] === seasonInput) &&
+                (!conditionInput || row[5].toLowerCase() === conditionInput)
+            );
 
-            tireData.forEach(row => {
-                let size = row[0].toLowerCase().trim();
-                let season = row[2].trim();
-                let brand = row[3].toLowerCase().trim();
-                let condition = row[5].trim().toLowerCase();
-
-                if ((!sizeInput || size.includes(sizeInput)) &&
-                    (!brandInput || brand.includes(brandInput)) &&
-                    (!seasonInput || season === seasonInput) &&
-                    (!conditionInput || condition === conditionInput)) {
-                    
-                    let tr = `<tr>
-                        <td>${row[0]}</td>
-                        <td>${row[1]}</td>
-                        <td>${row[2]}</td>
-                        <td>${row[3]}</td>
-                        <td>${row[4]}</td>
-                        <td>${row[5]}</td>
-                    </tr>`;
-                    tableBody.innerHTML += tr;
-                }
-            });
+            renderTable(filteredData);
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            fetchData(); // Завантажує дані при відкритті
-            setInterval(fetchData, 60000); // Оновлення кожні 60 секунд, щоб не гальмувало введення
+            fetchData(); // Завантажуємо дані одразу при відкритті сайту
+            setInterval(fetchData, 60000); // Оновлення раз на 60 секунд
         });
     </script>
 </body>
