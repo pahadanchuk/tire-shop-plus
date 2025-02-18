@@ -137,7 +137,7 @@
     </div>
 
     <script>
-        let tireData = []; // Глобальний масив для зберігання всіх шин
+        let tireData = []; // Глобальний масив для зберігання даних
 
         async function fetchData() {
             const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
@@ -151,16 +151,47 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                tireData = data.values; // Зберігаємо отримані дані
-                renderTable(tireData); // Одразу показуємо всі шини
+                tireData = data.values; // Зберігаємо дані локально
+                renderTable();
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         }
 
-        function renderTable(data) {
+        function renderTable() {
             let tableBody = document.getElementById("tireTableBody");
-            tableBody.innerHTML = data.map(row => `
+            tableBody.innerHTML = ""; // Очищаємо таблицю перед оновленням
+
+            tireData.forEach(row => {
+                let tr = `<tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td>${row[4]}</td>
+                    <td>${row[5]}</td>
+                </tr>`;
+                tableBody.innerHTML += tr;
+            });
+
+            filterTable(); // Фільтруємо після оновлення даних
+        }
+
+        function filterTable() {
+            let sizeInput = document.getElementById("searchSize").value.toLowerCase().trim();
+            let brandInput = document.getElementById("searchBrand").value.toLowerCase().trim();
+            let seasonInput = document.getElementById("searchSeason").value;
+            let conditionInput = document.getElementById("searchCondition").value.trim().toLowerCase();
+
+            let filteredData = tireData.filter(row =>
+                (!sizeInput || row[0].toLowerCase().includes(sizeInput)) &&
+                (!brandInput || row[3].toLowerCase().includes(brandInput)) &&
+                (!seasonInput || row[2] === seasonInput) &&
+                (!conditionInput || row[5].toLowerCase() === conditionInput)
+            );
+
+            let tableBody = document.getElementById("tireTableBody");
+            tableBody.innerHTML = filteredData.map(row => `
                 <tr>
                     <td>${row[0]}</td>
                     <td>${row[1]}</td>
@@ -172,25 +203,9 @@
             `).join("");
         }
 
-        function filterTable() {
-            let sizeInput = document.getElementById("searchSize").value.toLowerCase().trim();
-            let brandInput = document.getElementById("searchBrand").value.toLowerCase().trim();
-            let seasonInput = document.getElementById("searchSeason").value;
-            let conditionInput = document.getElementById("searchCondition").value.trim().toLowerCase();
-
-            let filteredData = tireData.filter(row => 
-                (!sizeInput || row[0].toLowerCase().includes(sizeInput)) &&
-                (!brandInput || row[3].toLowerCase().includes(brandInput)) &&
-                (!seasonInput || row[2] === seasonInput) &&
-                (!conditionInput || row[5].toLowerCase() === conditionInput)
-            );
-
-            renderTable(filteredData);
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
-            fetchData(); // Завантажуємо дані одразу при відкритті сайту
-            setInterval(fetchData, 60000); // Оновлення раз на 60 секунд
+            fetchData(); // Завантажує дані при відкритті
+            setInterval(fetchData, 60000); // Оновлення кожні 60 секунд, щоб не гальмувало введення
         });
     </script>
 </body>
