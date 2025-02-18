@@ -137,10 +137,11 @@
     </div>
 
     <script>
+        const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
+        const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
+        const range = "Sheet1!A2:F";
+
         async function fetchData() {
-            const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
-            const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
-            const range = "Sheet1!A2:F";
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
             try {
@@ -152,6 +153,7 @@
                 renderTable(data.values);
             } catch (error) {
                 console.error("Error fetching data:", error);
+                document.getElementById("tireTable").innerHTML = "<p style='color: red;'>Error loading data. Check API key and sheet access.</p>";
             }
         }
 
@@ -171,7 +173,7 @@
                 tableBody.innerHTML += tr;
             });
 
-            loadFilters();
+            loadFilters(); // Завантаження фільтрів після оновлення даних
             filterTable();
         }
 
@@ -190,16 +192,32 @@
                 let brand = cells[3].textContent.toLowerCase().trim();
                 let condition = cells[5].textContent.trim().toLowerCase();
 
-                row.style.display = (!sizeInput || size.includes(sizeInput)) &&
-                                    (!brandInput || brand.startsWith(brandInput)) &&
-                                    (!seasonInput || season === seasonInput) &&
-                                    (!conditionInput || condition === conditionInput) ? "" : "none";
+                row.style.display = 
+                    (!sizeInput || size.includes(sizeInput)) &&
+                    (!brandInput || brand.startsWith(brandInput)) &&
+                    (!seasonInput || season === seasonInput) &&
+                    (!conditionInput || condition === conditionInput) 
+                    ? "" : "none";
             });
+        }
+
+        function saveFilters() {
+            localStorage.setItem("searchSize", document.getElementById("searchSize").value);
+            localStorage.setItem("searchBrand", document.getElementById("searchBrand").value);
+            localStorage.setItem("searchSeason", document.getElementById("searchSeason").value);
+            localStorage.setItem("searchCondition", document.getElementById("searchCondition").value);
+        }
+
+        function loadFilters() {
+            document.getElementById("searchSize").value = localStorage.getItem("searchSize") || "";
+            document.getElementById("searchBrand").value = localStorage.getItem("searchBrand") || "";
+            document.getElementById("searchSeason").value = localStorage.getItem("searchSeason") || "";
+            document.getElementById("searchCondition").value = localStorage.getItem("searchCondition") || "";
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             fetchData();
-            setInterval(fetchData, 40000); // Оновлення даних тепер кожні 40 секунд
+            setInterval(fetchData, 5000); // Оновлення даних кожні 5 секунд
         });
     </script>
 </body>
