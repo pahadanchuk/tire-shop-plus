@@ -91,9 +91,9 @@
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
-            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
-            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
-            <select id="searchSeason">
+            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)" oninput="saveFilters(); filterTable();">
+            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="saveFilters(); filterTable();">
+            <select id="searchSeason" onchange="saveFilters(); filterTable();">
                 <option value="">Select Season</option>
                 <option value="A/T">A/T</option>
                 <option value="A/S">A/S</option>
@@ -101,7 +101,7 @@
                 <option value="M/T">M/T</option>
                 <option value="A/W">A/W</option>
             </select>
-            <select id="searchCondition">
+            <select id="searchCondition" onchange="saveFilters(); filterTable();">
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
                 <option value="Used">Used</option>
@@ -153,68 +153,74 @@
                 renderTable(data.values);
             } catch (error) {
                 console.error("Error fetching data:", error);
+                document.getElementById("tireTable").innerHTML = "<p style='color: red;'>Error loading data. Check API key and sheet access.</p>";
             }
         }
 
         function renderTable(rows) {
             let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
             tableBody.innerHTML = "";
-            let fragment = document.createDocumentFragment();
 
             rows.forEach(row => {
-                let tr = document.createElement("tr");
-                row.forEach(cell => {
-                    let td = document.createElement("td");
-                    td.textContent = cell;
-                    tr.appendChild(td);
-                });
-                fragment.appendChild(tr);
+                let tr = `<tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td>${row[4]}</td>
+                    <td>${row[5]}</td>
+                </tr>`;
+                tableBody.innerHTML += tr;
             });
 
-            tableBody.appendChild(fragment);
+            loadFilters(); // Завантаження фільтрів після оновлення даних
             filterTable();
         }
 
         function filterTable() {
-            let sizeInput = document.getElementById("searchSize").value.toLowerCase();
-            let brandInput = document.getElementById("searchBrand").value.toLowerCase();
+            let sizeInput = document.getElementById("searchSize").value.toLowerCase().trim();
+            let brandInput = document.getElementById("searchBrand").value.toLowerCase().trim();
             let seasonInput = document.getElementById("searchSeason").value;
-            let conditionInput = document.getElementById("searchCondition").value;
+            let conditionInput = document.getElementById("searchCondition").value.trim().toLowerCase();
 
-            let rows = document.querySelectorAll("#tireTable tbody tr");
+            let table = document.getElementById("tireTable");
+            let rows = table.getElementsByTagName("tr");
 
-            rows.forEach(row => {
-                let cells = row.getElementsByTagName("td");
-                let size = cells[0].textContent.toLowerCase();
-                let season = cells[2].textContent;
-                let brand = cells[3].textContent.toLowerCase();
-                let condition = cells[5].textContent;
+            for (let i = 1; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName("td");
+                let size = cells[0].textContent.toLowerCase().trim();
+                let season = cells[2].textContent.trim();
+                let brand = cells[3].textContent.toLowerCase().trim();
+                let condition = cells[5].textContent.trim().toLowerCase();
 
-                row.style.display = (
-                    (!sizeInput || size.includes(sizeInput)) &&
-                    (!brandInput || brand.startsWith(brandInput)) &&
-                    (!seasonInput || season === seasonInput) &&
-                    (!conditionInput || condition === conditionInput)
-                ) ? "" : "none";
-            });
+                let show = true;
+
+                if (sizeInput && !size.includes(sizeInput)) show = false;
+                if (brandInput && !brand.startsWith(brandInput)) show = false;
+                if (seasonInput && season !== seasonInput) show = false;
+                if (conditionInput && condition !== conditionInput) show = false;
+
+                rows[i].style.display = show ? "" : "none";
+            }
         }
 
-        function debounce(func, delay) {
-            let timer;
-            return function() {
-                clearTimeout(timer);
-                timer = setTimeout(func, delay);
-            };
+        function saveFilters() {
+            localStorage.setItem("searchSize", document.getElementById("searchSize").value);
+            localStorage.setItem("searchBrand", document.getElementById("searchBrand").value);
+            localStorage.setItem("searchSeason", document.getElementById("searchSeason").value);
+            localStorage.setItem("searchCondition", document.getElementById("searchCondition").value);
         }
 
-        document.getElementById("searchSize").addEventListener("input", debounce(filterTable, 300));
-        document.getElementById("searchBrand").addEventListener("input", debounce(filterTable, 300));
-        document.getElementById("searchSeason").addEventListener("change", filterTable);
-        document.getElementById("searchCondition").addEventListener("change", filterTable);
+        function loadFilters() {
+            document.getElementById("searchSize").value = localStorage.getItem("searchSize") || "";
+            document.getElementById("searchBrand").value = localStorage.getItem("searchBrand") || "";
+            document.getElementById("searchSeason").value = localStorage.getItem("searchSeason") || "";
+            document.getElementById("searchCondition").value = localStorage.getItem("searchCondition") || "";
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             fetchData();
-            setInterval(fetchData, 30000); // Оновлення даних кожні 30 секунд
+            setInterval(fetchData, 5000); // Оновлення даних кожні 5 секунд
         });
     </script>
 </body>
