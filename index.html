@@ -151,7 +151,8 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                tireData = data.values; // Зберігаємо дані локально
+                tireData = data.values;
+       localStorage.setItem('cachedTires', JSON.stringify(tireData)); // Зберігаємо дані локально
                 renderTable();
             } catch (error) {
                 console.error("Error fetching data:", error);
