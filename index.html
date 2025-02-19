@@ -120,7 +120,7 @@
                 </tr>
             </thead>
             <tbody id="tireTableBody">
-                <!-- Data will be inserted here -->
+                <tr><td colspan="6" style="text-align:center; font-size:18px;">Loading tires...</td></tr>
             </tbody>
         </table>
     </div>
@@ -209,7 +209,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            fetchData(); renderTable(tireData); // Завантажує дані при відкритті
+            renderTable(tireData); fetchData(); // Завантажує дані при відкритті
             setInterval(fetchData, 60000); // Оновлення кожні 60 секунд, щоб не гальмувало введення
         });
     </script>
