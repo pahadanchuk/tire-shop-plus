@@ -179,22 +179,22 @@
             let sizeInput = document.getElementById("searchSize").value.toLowerCase();
             let brandInput = document.getElementById("searchBrand").value.toLowerCase();
             let seasonInput = document.getElementById("searchSeason").value;
-            let conditionInput = document.getElementById("searchCondition").value.toLowerCase();
+            let conditionInput = document.getElementById("searchCondition").value;
 
             let rows = document.querySelectorAll("#tireTable tbody tr");
 
             rows.forEach(row => {
                 let cells = row.getElementsByTagName("td");
                 let size = cells[0].textContent.toLowerCase();
-                let season = cells[2].textContent.toLowerCase();
+                let season = cells[2].textContent.trim();
                 let brand = cells[3].textContent.toLowerCase();
-                let condition = cells[5].textContent.toLowerCase();
+                let condition = cells[5].textContent.trim();
 
                 row.style.display = (
                     (!sizeInput || size.includes(sizeInput)) &&
                     (!brandInput || brand.includes(brandInput)) &&
-                    (!seasonInput || season.includes(seasonInput)) &&
-                    (!conditionInput || condition === conditionInput)
+                    (!seasonInput || season === seasonInput) &&
+                    (!conditionInput || condition.toLowerCase() === conditionInput.toLowerCase())
                 ) ? "" : "none";
             });
         }
