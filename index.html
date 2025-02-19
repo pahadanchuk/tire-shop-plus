@@ -91,7 +91,7 @@
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
-            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)" oninput="filterTable();">
+            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)" oninput="filterTable();" autofocus>
             <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="filterTable();">
             <select id="searchSeason" onchange="filterTable();">
                 <option value="">Select Season</option>
@@ -209,7 +209,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            fetchData(); // Завантажує дані при відкритті
+            fetchData(); renderTable(tireData); // Завантажує дані при відкритті
             setInterval(fetchData, 60000); // Оновлення кожні 60 секунд, щоб не гальмувало введення
         });
     </script>
