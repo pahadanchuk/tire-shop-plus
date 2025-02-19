@@ -91,9 +91,9 @@
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
-            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)" oninput="filterTable();" autofocus>
-            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)" oninput="filterTable();">
-            <select id="searchSeason" onchange="filterTable();">
+            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
+            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
+            <select id="searchSeason">
                 <option value="">Select Season</option>
                 <option value="A/T">A/T</option>
                 <option value="A/S">A/S</option>
@@ -101,7 +101,7 @@
                 <option value="M/T">M/T</option>
                 <option value="A/W">A/W</option>
             </select>
-            <select id="searchCondition" onchange="filterTable();">
+            <select id="searchCondition">
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
                 <option value="Used">Used</option>
@@ -119,8 +119,8 @@
                     <th>New/Used</th>
                 </tr>
             </thead>
-            <tbody id="tireTableBody">
-                <tr><td colspan="6" style="text-align:center; font-size:18px;">Loading tires...</td></tr>
+            <tbody>
+                <!-- Data will be inserted here -->
             </tbody>
         </table>
     </div>
@@ -137,12 +137,11 @@
     </div>
 
     <script>
-        let tireData = []; // Глобальний масив для зберігання даних
+        const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
+        const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
+        const range = "Sheet1!A2:F";
 
         async function fetchData() {
-            const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
-            const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
-            const range = "Sheet1!A2:F";
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
             try {
@@ -151,71 +150,71 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                tireData = data.values;
-       localStorage.setItem('cachedTires', JSON.stringify(tireData)); // Зберігаємо дані локально
-                renderTable();
+                renderTable(data.values);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         }
 
-        function renderTable() {
-            let tableBody = document.getElementById("tireTableBody");
-            tableBody.innerHTML = ""; // Очищаємо таблицю перед оновленням
+        function renderTable(rows) {
+            let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+            let fragment = document.createDocumentFragment();
 
-            tireData.forEach(row => {
-                let tr = `<tr>
-                    <td>${row[0]}</td>
-                    <td>${row[1]}</td>
-                    <td>${row[2]}</td>
-                    <td>${row[3]}</td>
-                    <td>${row[4]}</td>
-                    <td>${row[5]}</td>
-                </tr>`;
-                tableBody.innerHTML += tr;
+            rows.forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                fragment.appendChild(tr);
             });
 
-            filterTable(); // Фільтруємо після оновлення даних
+            tableBody.appendChild(fragment);
+            filterTable();
         }
 
         function filterTable() {
-            let sizeInput = document.getElementById("searchSize").value.toLowerCase().trim();
-            let brandInput = document.getElementById("searchBrand").value.toLowerCase().trim();
+            let sizeInput = document.getElementById("searchSize").value.toLowerCase();
+            let brandInput = document.getElementById("searchBrand").value.toLowerCase();
             let seasonInput = document.getElementById("searchSeason").value;
-            let conditionInput = document.getElementById("searchCondition").value.trim().toLowerCase();
+            let conditionInput = document.getElementById("searchCondition").value;
 
-            let filteredData = tireData.filter(row =>
-                (!sizeInput || row[0].toLowerCase().includes(sizeInput)) &&
-                (!brandInput || row[3].toLowerCase().includes(brandInput)) &&
-                (!seasonInput || row[2] === seasonInput) &&
-                (!conditionInput || row[5].trim().toLowerCase() === conditionInput.toLowerCase())
-            );
+            let rows = document.querySelectorAll("#tireTable tbody tr");
 
-            let tableBody = document.getElementById("tireTableBody");
-            let fragment = document.createDocumentFragment();
-            filteredData.forEach(row => {
-                let tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${row[0]}</td>
-                    <td>${row[1]}</td>
-                    <td>${row[2]}</td>
-                    <td>${row[3]}</td>
-                    <td>${row[4]}</td>
-                    <td>${row[5]}</td>
-                `;
-                fragment.appendChild(tr);
+            rows.forEach(row => {
+                let cells = row.getElementsByTagName("td");
+                let size = cells[0].textContent.toLowerCase();
+                let season = cells[2].textContent;
+                let brand = cells[3].textContent.toLowerCase();
+                let condition = cells[5].textContent;
+
+                row.style.display = (
+                    (!sizeInput || size.includes(sizeInput)) &&
+                    (!brandInput || brand.startsWith(brandInput)) &&
+                    (!seasonInput || season === seasonInput) &&
+                    (!conditionInput || condition === conditionInput)
+                ) ? "" : "none";
             });
-            tableBody.innerHTML = "";  // Очистка перед вставкою
-            tableBody.appendChild(fragment);
         }
 
+        function debounce(func, delay) {
+            let timer;
+            return function() {
+                clearTimeout(timer);
+                timer = setTimeout(func, delay);
+            };
+        }
+
+        document.getElementById("searchSize").addEventListener("input", debounce(filterTable, 300));
+        document.getElementById("searchBrand").addEventListener("input", debounce(filterTable, 300));
+        document.getElementById("searchSeason").addEventListener("change", filterTable);
+        document.getElementById("searchCondition").addEventListener("change", filterTable);
+
         document.addEventListener("DOMContentLoaded", () => {
-            renderTable(tireData); if (localStorage.getItem('cachedTires')) {
-        tireData = JSON.parse(localStorage.getItem('cachedTires'));
-        renderTable(tireData);
-    }
-    setTimeout(fetchData, 1000); // Завантажує дані при відкритті
-             // Оновлення кожні 60 секунд, щоб не гальмувало введення
+            fetchData();
+            setInterval(fetchData, 30000); // Оновлення даних кожні 30 секунд
         });
     </script>
 </body>
