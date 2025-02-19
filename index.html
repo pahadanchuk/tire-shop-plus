@@ -210,8 +210,12 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            renderTable(tireData); fetchData(); // Завантажує дані при відкритті
-            setInterval(fetchData, 60000); // Оновлення кожні 60 секунд, щоб не гальмувало введення
+            renderTable(tireData); if (localStorage.getItem('cachedTires')) {
+        tireData = JSON.parse(localStorage.getItem('cachedTires'));
+        renderTable(tireData);
+    }
+    setTimeout(fetchData, 1000); // Завантажує дані при відкритті
+             // Оновлення кожні 60 секунд, щоб не гальмувало введення
         });
     </script>
 </body>
