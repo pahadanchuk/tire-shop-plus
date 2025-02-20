@@ -190,8 +190,7 @@
             rows.forEach(row => {
                 let tr = document.createElement("tr");
 
-                // Переконуємося, що є всі необхідні дані, включаючи Location
-                for (let i = 0; i < 7; i++) {
+                for (let i = 0; i < 7; i++) { // Враховуємо доданий стовпець
                     let td = document.createElement("td");
                     td.textContent = row[i] ? row[i] : "N/A"; // Якщо немає значення, пишемо "N/A"
                     tr.appendChild(td);
@@ -199,6 +198,15 @@
 
                 fragment.appendChild(tr);
             });
+
+            tableBody.appendChild(fragment);
+            filterTable(); // Зберігаємо функціонал фільтрації
+        }
+            let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+            let fragment = document.createDocumentFragment();
+
+            rows.forEach(row => {
                 let tr = document.createElement("tr");
                 row.forEach(cell => {
                     let td = document.createElement("td");
@@ -221,17 +229,6 @@
             let rows = document.querySelectorAll("#tireTable tbody tr");
 
             rows.forEach(row => {
-                let tr = document.createElement("tr");
-
-                // Переконуємося, що є всі необхідні дані, включаючи Location
-                for (let i = 0; i < 7; i++) {
-                    let td = document.createElement("td");
-                    td.textContent = row[i] ? row[i] : "N/A"; // Якщо немає значення, пишемо "N/A"
-                    tr.appendChild(td);
-                }
-
-                fragment.appendChild(tr);
-            });
                 let cells = row.getElementsByTagName("td");
                 let size = cells[0].textContent.toLowerCase();
                 let season = cells[2].textContent.trim();
