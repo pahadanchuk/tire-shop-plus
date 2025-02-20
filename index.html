@@ -78,6 +78,8 @@
             font-size: 14px;
         }
         @media (max-width: 768px) {
+            .container { padding: 10px; }
+            table { width: 100%; display: block; overflow-x: auto; }
             table {
                 font-size: 12px;
             }
@@ -116,6 +118,8 @@
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
+        
+            
             <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
             <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
             <select id="searchSeason">
@@ -142,6 +146,7 @@
                     <th>Brand/Model</th>
                     <th>Pieces</th>
                     <th>New/Used</th>
+                    <th>Location</th>
                 </tr>
             </thead>
             <tbody>
@@ -164,7 +169,7 @@
     <script>
         const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
         const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
-        const range = "Sheet1!A2:F";
+        const range = "Sheet1!A2:G";
 
         async function fetchData() {
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
@@ -188,7 +193,11 @@
 
             rows.forEach(row => {
                 let tr = document.createElement("tr");
-                row.forEach(cell => {
+                row.forEach((cell, index) => {
+                    let td = document.createElement('td');
+                    td.textContent = cell;
+                    if (index === 6) td.classList.add('location-column');
+                    tr.appendChild(td);
                     let td = document.createElement("td");
                     td.textContent = cell;
                     tr.appendChild(td);
@@ -201,6 +210,14 @@
         }
 
         function filterTable() {
+        row.style.display = (
+            (!sizeInput || size.includes(sizeInput)) &&
+            (!brandInput || brand.includes(brandInput)) &&
+            (!seasonInput || season === seasonInput) &&
+            (!conditionInput || condition.toLowerCase() === conditionInput.toLowerCase()) &&
+            (!locationInput || location.includes(locationInput))
+        ) ? "" : "none";
+
             let sizeInput = document.getElementById("searchSize").value.toLowerCase();
             let brandInput = document.getElementById("searchBrand").value.toLowerCase();
             let seasonInput = document.getElementById("searchSeason").value;
