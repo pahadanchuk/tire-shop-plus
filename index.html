@@ -77,7 +77,27 @@
             padding: 10px;
             font-size: 14px;
         }
+        
         @media (max-width: 768px) {
+            .container { padding: 10px; width: 95%; }
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px;
+                text-align: left;
+                white-space: nowrap;
+            }
+        }
+        @media (min-width: 769px) {
+            .container { max-width: 1000px; margin: auto; }
+            table { width: 100%; }
+            th, td { text-align: center; }
+        }
+
             table {
                 font-size: 12px;
             }
@@ -142,6 +162,7 @@
                     <th>Brand/Model</th>
                     <th>Pieces</th>
                     <th>New/Used</th>
+                    <th>Location</th>
                 </tr>
             </thead>
             <tbody>
@@ -164,7 +185,7 @@
     <script>
         const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
         const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
-        const range = "Sheet1!A2:F";
+        const range = "Sheet1!A2:G";
 
         async function fetchData() {
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
@@ -188,6 +209,20 @@
 
             rows.forEach(row => {
                 let tr = document.createElement("tr");
+                row.forEach((cell, index) => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                // Додаємо порожню комірку, якщо немає даних про Location
+                if (row.length < 7) {
+                    let td = document.createElement("td");
+                    td.textContent = "N/A"; // Якщо дані про Location відсутні
+                    tr.appendChild(td);
+                }
+                fragment.appendChild(tr);
+            });
+                let tr = document.createElement("tr");
                 row.forEach(cell => {
                     let td = document.createElement("td");
                     td.textContent = cell;
@@ -209,6 +244,20 @@
             let rows = document.querySelectorAll("#tireTable tbody tr");
 
             rows.forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach((cell, index) => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                // Додаємо порожню комірку, якщо немає даних про Location
+                if (row.length < 7) {
+                    let td = document.createElement("td");
+                    td.textContent = "N/A"; // Якщо дані про Location відсутні
+                    tr.appendChild(td);
+                }
+                fragment.appendChild(tr);
+            });
                 let cells = row.getElementsByTagName("td");
                 let size = cells[0].textContent.toLowerCase();
                 let season = cells[2].textContent.trim();
