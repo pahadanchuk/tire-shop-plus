@@ -142,7 +142,6 @@
                     <th>Brand/Model</th>
                     <th>Pieces</th>
                     <th>New/Used</th>
-                    <th>Location</th>
                 </tr>
             </thead>
             <tbody>
@@ -165,7 +164,7 @@
     <script>
         const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
         const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
-        const range = "Sheet1!A2:G";
+        const range = "Sheet1!A2:F";
 
         async function fetchData() {
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
@@ -189,17 +188,6 @@
 
             rows.forEach(row => {
                 let tr = document.createElement("tr");
-
-                // Переконуємося, що є всі необхідні дані, включаючи Location
-                for (let i = 0; i < 7; i++) {
-                    let td = document.createElement("td");
-                    td.textContent = row[i] ? row[i] : "N/A"; // Якщо немає значення, пишемо "N/A"
-                    tr.appendChild(td);
-                }
-
-                fragment.appendChild(tr);
-            });
-                let tr = document.createElement("tr");
                 row.forEach(cell => {
                     let td = document.createElement("td");
                     td.textContent = cell;
@@ -221,17 +209,6 @@
             let rows = document.querySelectorAll("#tireTable tbody tr");
 
             rows.forEach(row => {
-                let tr = document.createElement("tr");
-
-                // Переконуємося, що є всі необхідні дані, включаючи Location
-                for (let i = 0; i < 7; i++) {
-                    let td = document.createElement("td");
-                    td.textContent = row[i] ? row[i] : "N/A"; // Якщо немає значення, пишемо "N/A"
-                    tr.appendChild(td);
-                }
-
-                fragment.appendChild(tr);
-            });
                 let cells = row.getElementsByTagName("td");
                 let size = cells[0].textContent.toLowerCase();
                 let season = cells[2].textContent.trim();
