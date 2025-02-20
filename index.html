@@ -77,9 +77,27 @@
             padding: 10px;
             font-size: 14px;
         }
+        
         @media (max-width: 768px) {
-            .container { padding: 10px; }
-            table { width: 100%; display: block; overflow-x: auto; }
+            .container { padding: 10px; width: 95%; }
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px;
+                text-align: left;
+                white-space: nowrap;
+            }
+        }
+        @media (min-width: 769px) {
+            .container { max-width: 1000px; margin: auto; }
+            table { width: 100%; }
+            th, td { text-align: center; }
+        }
+
             table {
                 font-size: 12px;
             }
@@ -118,8 +136,6 @@
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
-        
-            
             <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
             <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
             <select id="searchSeason">
@@ -194,10 +210,20 @@
             rows.forEach(row => {
                 let tr = document.createElement("tr");
                 row.forEach((cell, index) => {
-                    let td = document.createElement('td');
+                    let td = document.createElement("td");
                     td.textContent = cell;
-                    if (index === 6) td.classList.add('location-column');
                     tr.appendChild(td);
+                });
+                // Додаємо порожню комірку, якщо немає даних про Location
+                if (row.length < 7) {
+                    let td = document.createElement("td");
+                    td.textContent = "N/A"; // Якщо дані про Location відсутні
+                    tr.appendChild(td);
+                }
+                fragment.appendChild(tr);
+            });
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
                     let td = document.createElement("td");
                     td.textContent = cell;
                     tr.appendChild(td);
@@ -210,14 +236,6 @@
         }
 
         function filterTable() {
-        row.style.display = (
-            (!sizeInput || size.includes(sizeInput)) &&
-            (!brandInput || brand.includes(brandInput)) &&
-            (!seasonInput || season === seasonInput) &&
-            (!conditionInput || condition.toLowerCase() === conditionInput.toLowerCase()) &&
-            (!locationInput || location.includes(locationInput))
-        ) ? "" : "none";
-
             let sizeInput = document.getElementById("searchSize").value.toLowerCase();
             let brandInput = document.getElementById("searchBrand").value.toLowerCase();
             let seasonInput = document.getElementById("searchSeason").value;
@@ -226,6 +244,20 @@
             let rows = document.querySelectorAll("#tireTable tbody tr");
 
             rows.forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach((cell, index) => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                // Додаємо порожню комірку, якщо немає даних про Location
+                if (row.length < 7) {
+                    let td = document.createElement("td");
+                    td.textContent = "N/A"; // Якщо дані про Location відсутні
+                    tr.appendChild(td);
+                }
+                fragment.appendChild(tr);
+            });
                 let cells = row.getElementsByTagName("td");
                 let size = cells[0].textContent.toLowerCase();
                 let season = cells[2].textContent.trim();
