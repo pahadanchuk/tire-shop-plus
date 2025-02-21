@@ -10,6 +10,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tire Shop Plus</title>
     <style>
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Додає горизонтальну прокрутку */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px; /* Менший розмір шрифту */
+            white-space: nowrap; /* Запобігає перенесенню тексту */
+        }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+            .table-container {
+                overflow-x: auto;
+            }
+        }
+    
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -133,7 +159,7 @@
             </select>
         </div>
 
-        <table id="tireTable">
+        <div class="table-container"><table id="tireTable">
             <thead>
                 <tr>
                     <th>Size</th>
@@ -148,7 +174,7 @@
             <tbody>
                 <!-- Data will be inserted here -->
             </tbody>
-        </table>
+        </table></div>
     </div>
 
     <div class="contact-info">
