@@ -182,36 +182,20 @@
             }
         }
 
-        
-function renderTable(rows) {
-    let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
-    tableBody.innerHTML = "";
-    let fragment = document.createDocumentFragment();
-
-    rows.forEach(row => {
-        let tr = document.createElement("tr");
-
-        // Додаємо "Location" без зміни логіки сайту, завжди сприймаємо його як текст
-        for (let i = 0; i < 7; i++) {
-            let td = document.createElement("td");
-            let value = row[i] !== undefined ? row[i].toString() : "N/A";  // Примусово конвертуємо в текст
-            td.textContent = value;
-            tr.appendChild(td);
-        }
-
-        fragment.appendChild(tr);
-    });
-
-    tableBody.appendChild(fragment);
-}
-
+        function renderTable(rows) {
             let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
             tableBody.innerHTML = "";
             let fragment = document.createDocumentFragment();
 
             rows.forEach(row => {
                 let tr = document.createElement("tr");
-                row.forEach(cell => {
+                
+    row.forEach((cell, index) => {
+        let td = document.createElement("td");
+        td.textContent = cell;
+        tr.appendChild(td);
+    });
+    
                     let td = document.createElement("td");
                     td.textContent = cell;
                     tr.appendChild(td);
