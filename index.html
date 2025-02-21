@@ -182,26 +182,31 @@
             }
         }
 
-        function renderTable(rows) {
-            let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
-            tableBody.innerHTML = "";
-            let fragment = document.createDocumentFragment();
+        
+function renderTable(rows) {
+    let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = "";
+    let fragment = document.createDocumentFragment();
 
-            rows.forEach(row => {
-                let tr = document.createElement("tr");
+    rows.forEach(row => {
+        let tr = document.createElement("tr");
 
-                for (let i = 0; i < 7; i++) { // Враховуємо доданий стовпець
-                    let td = document.createElement("td");
-                    td.textContent = row[i] ? row[i] : "N/A"; // Якщо немає значення, пишемо "N/A"
-                    tr.appendChild(td);
-                }
+        for (let i = 0; i < 7; i++) {  // Враховуємо новий стовпець "Location"
+            let td = document.createElement("td");
 
-                fragment.appendChild(tr);
-            });
+            // Якщо індекс виходить за межі або дані відсутні, ставимо "N/A"
+            td.textContent = (row[i] !== undefined && row[i] !== "") ? row[i] : "N/A";
 
-            tableBody.appendChild(fragment);
-            filterTable(); // Зберігаємо функціонал фільтрації
+            tr.appendChild(td);
         }
+
+        fragment.appendChild(tr);
+    });
+
+    tableBody.appendChild(fragment);
+    filterTable(); // Збереження пошуку і фільтрів
+}
+
             let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
             tableBody.innerHTML = "";
             let fragment = document.createDocumentFragment();
