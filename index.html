@@ -191,9 +191,10 @@ function renderTable(rows) {
     rows.forEach(row => {
         let tr = document.createElement("tr");
 
-        for (let i = 0; i < 7; i++) {  // Включаємо новий стовпець "Location"
+        // Додаємо "Location" без зміни логіки сайту
+        for (let i = 0; i < 7; i++) {
             let td = document.createElement("td");
-            td.textContent = (row[i] !== undefined && row[i] !== "") ? row[i] : "N/A";  // Якщо значення немає, пишемо "N/A"
+            td.textContent = (row[i] !== undefined && row[i] !== "") ? row[i] : "N/A"; // Якщо значення немає, пишемо "N/A"
             tr.appendChild(td);
         }
 
@@ -201,31 +202,6 @@ function renderTable(rows) {
     });
 
     tableBody.appendChild(fragment);
-    filterTable(); // Збереження функціональності фільтрів
-}
-
-function filterTable() {
-    let sizeInput = document.getElementById("searchSize").value.toLowerCase();
-    let brandInput = document.getElementById("searchBrand").value.toLowerCase();
-    let seasonInput = document.getElementById("searchSeason").value;
-    let conditionInput = document.getElementById("searchCondition").value.toLowerCase();
-
-    let rows = document.querySelectorAll("#tireTable tbody tr");
-
-    rows.forEach(row => {
-        let cells = row.getElementsByTagName("td");
-        let size = cells[0].textContent.toLowerCase();
-        let brand = cells[3].textContent.toLowerCase();
-        let season = cells[2].textContent.trim();
-        let condition = cells[5].textContent.trim().toLowerCase();
-
-        row.style.display = (
-            (!sizeInput || size.includes(sizeInput)) &&
-            (!brandInput || brand.includes(brandInput)) &&
-            (!seasonInput || season === seasonInput) &&
-            (!conditionInput || condition === conditionInput)
-        ) ? "" : "none";
-    });
 }
 
             let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
