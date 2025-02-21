@@ -190,11 +190,11 @@
             rows.forEach(row => {
                 let tr = document.createElement("tr");
                 
-    row.forEach((cell, index) => {
+    for (let i = 0; i < row.length; i++) {
         let td = document.createElement("td");
-        td.textContent = cell;
+        td.textContent = row[i];
         tr.appendChild(td);
-    });
+    }
     
                     let td = document.createElement("td");
                     td.textContent = cell;
