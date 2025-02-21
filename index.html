@@ -191,10 +191,11 @@ function renderTable(rows) {
     rows.forEach(row => {
         let tr = document.createElement("tr");
 
-        // Додаємо "Location" без зміни логіки сайту
+        // Додаємо "Location" без зміни логіки сайту, завжди сприймаємо його як текст
         for (let i = 0; i < 7; i++) {
             let td = document.createElement("td");
-            td.textContent = (row[i] !== undefined && row[i] !== "") ? row[i] : "N/A"; // Якщо значення немає, пишемо "N/A"
+            let value = row[i] !== undefined ? row[i].toString() : "N/A";  // Примусово конвертуємо в текст
+            td.textContent = value;
             tr.appendChild(td);
         }
 
