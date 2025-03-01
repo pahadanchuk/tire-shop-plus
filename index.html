@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="description" content="Tire Shop Plus - Найкращі шини за доступними цінами. Купуйте нові та вживані шини у Едмонтоні.">
+    <meta name="keywords" content="шини, автошини, купити шини, Edmonton, нові шини, вживані шини, Tire Shop Plus">
+    <meta name="author" content="Tire Shop Plus">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tire Shop Plus</title>
+    <style>
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column; /* Робить блоки вертикальними */
+        text-align: center;
+    }
+
+    .pricing-left, .pricing-right {
+        width: 100%; /* На телефоні блоки будуть займати всю ширину */
+        margin-bottom: 20px; /* Додає відступ між секціями */
+    }
+
+    .logo-container {
+        order: -1; /* Переміщує логотип на початок */
+        margin-bottom: 20px;
+    }
+
+    h3, h4 {
+        font-size: 18px; /* Менший заголовок */
+    }
+
+    .price {
+        font-size: 16px; /* Менший розмір цін */
+    }
+}
+
+    .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url("background.jpg"); /* Використай правильний фон */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.logo-container {
+    text-align: center;
+    flex: 1;
+}
+
+.logo {
+    max-width: 150px;
+}
+
+.pricing-left, .pricing-right {
+    width: 30%;
+    color: yellow;
+    text-align: center;
+}
+
+.pricing-left h3, .pricing-right h3, .pricing-right h4 {
+    text-transform: uppercase;
+    border-bottom: 2px solid yellow;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-weight: bold;
+}
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Додає горизонтальну прокрутку */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px; /* Менший розмір шрифту */
+            white-space: nowrap; /* Запобігає перенесенню тексту */
+        }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+            .table-container {
+                overflow-x: auto;
+            }
+        }
+    
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        header {
+            background-color: #202123;
+            color: #FFD700;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logo {
+            max-width: 200px;
+            display: block;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #FFD700;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            border: 1px solid #000;
+        }
+        button {
+            background-color: #FFD700;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .contact-info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: black;
+            color: #FFD700;
+            border-radius: 5px;
+        }
+        .contact-info p, .contact-info a {
+            margin: 5px 0;
+            color: #FFD700;
+            font-size: 16px;
+        }
+        .footer {
+            background-color: black;
+            color: #FFD700;
+            padding: 10px;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Tire Shop Plus",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "12530 118 Ave NW",
+        "addressLocality": "Edmonton",
+        "addressRegion": "AB",
+        "postalCode": "T5L 2K6",
+        "addressCountry": "CA"
+      },
+      "telephone": "+1 (780) 455-7467",
+      "url": "https://yourwebsite.com"
+    }
+    </script>
+
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tireshopplus.ca/">
+
+    <!-- Open Graph for Facebook, Instagram, etc. -->
+    <meta property="og:title" content="Tire Shop Plus">
+    <meta property="og:description" content="Найкращі шини за доступними цінами в Едмонтоні. Нові та вживані шини.">
+    <meta property="og:image" content="https://tireshopplus.ca/logo.png">
+    <meta property="og:url" content="https://tireshopplus.ca/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tire Shop Plus">
+    <meta name="twitter:description" content="Найкращі шини за доступними цінами в Едмонтоні. Нові та вживані шини.">
+    <meta name="twitter:image" content="https://tireshopplus.ca/logo.png">
+    </head>
+    
+<body>
+    <header class="header-container">
+        <div class="pricing-left">
+            <h3>With Purchase – Installation + Balancing</h3>
+            <p><strong>14”-16”</strong> – <span class="price">$25 ea | Set ($100)</span></p>
+            <p><strong>17”-18”</strong> – <span class="price">$27 ea | Set ($108)</span></p>
+            <p><strong>19”-22”</strong> – <span class="price">$29 ea | Set ($116)</span></p>
+
+            <h3>Only Balancing</h3>
+            <p><strong>14”-16”</strong> – <span class="price">$18 ea</span></p>
+            <p><strong>17”-18”</strong> – <span class="price">$22 ea</span></p>
+            <p><strong>19”-22”</strong> – <span class="price">$24 ea</span></p>
+        </div>
+    
+        <div class="logo-container">
+            <h1 style="color: #FFD700; text-align: center; font-size: 32px; margin-bottom: 10px;">
+                Tire Shop Plus
+            </h1>
+            <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
+            <p style="text-align: center;">Tire Shop Plus - Best Tires at Affordable Prices</p>
+        </div>
+    
+        <div class="pricing-right">
+            <h3>Installation + Balancing</h3>
+            <p><strong>14”-15”</strong> – <span class="price">$120</span></p>
+            <p><strong>16”-18”</strong> – <span class="price">$140</span></p>
+            <p><strong>19”-22”</strong> – <span class="price">$160</span></p>
+    
+            <h4>Trucks</h4>
+            <p><strong>16”-18”</strong> – <span class="price">$150</span></p>
+            <p><strong>20”-22”</strong> – <span class="price">$180</span></p>
+    
+          
+        </div>
+    </header>
+    <div class="container">
+        <h2>Search for Tires</h2>
+        <div class="search-bar">
+            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
+            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
+            <select id="searchSeason">
+                <option value="">Select Season</option>
+                <option value="A/T">A/T</option>
+                <option value="A/S">A/S</option>
+                <option value="Wint">Wint</option>
+                <option value="M/T">M/T</option>
+                <option value="A/W">A/W</option>
+            </select>
+            <select id="searchCondition">
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+            </select>
+        </div>
+
+        <div class="table-container"><table id="tireTable">
+            <thead>
+                <tr>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Season</th>
+                    <th>Brand/Model</th>
+                    <th>Pieces</th>
+                    <th>New/Used</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table></div>
+    </div>
+
+    <div class="contact-info">
+        <h2>Contact Us</h2>
+        <p>📞 <strong>+1 (780) 455-7467</strong></p>
+        <p>📧 <a href="mailto:tireshopplus@gmail.com">tireshopplus@gmail.com</a></p>
+        <p>⏰ <strong>Hours:</strong> Mon-Fri 8:30 AM - 5:30 PM | Sat 8:30 AM - 3:00 PM</p>
+    </div>
+
+    <div class="footer">
+        © 2024 Tire Shop Plus | 12530 118 Ave NW, Edmonton, AB T5L 2K6, Canada
+    </div>
+
+    <script>
+        const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
+        const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
+        const range = "Sheet1!A2:G";
+
+        async function fetchData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+
+            try {
+                const response = await fetch(url, { cache: "no-store" });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                renderTable(data.values);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        function renderTable(rows) {
+            let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+            let fragment = document.createDocumentFragment();
+
+           for (let j = 0; j < rows.length; j++) {
+    let tr = document.createElement("tr");
+    for (let i = 0; i < rows[j].length; i++) {
+        let td = document.createElement("td");
+        td.textContent = rows[j][i];
+        tr.appendChild(td);
+    }
+    fragment.appendChild(tr);
+}
+
+            tableBody.appendChild(fragment);
+            filterTable();
+        }
+
+        function filterTable() {
+            let sizeInput = document.getElementById("searchSize").value.toLowerCase();
+            let brandInput = document.getElementById("searchBrand").value.toLowerCase();
+            let seasonInput = document.getElementById("searchSeason").value;
+            let conditionInput = document.getElementById("searchCondition").value;
+
+            let rows = document.querySelectorAll("#tireTable tbody tr");
+
+            rows.forEach(row => {
+                let cells = row.getElementsByTagName("td");
+                let size = cells[0].textContent.toLowerCase();
+                let season = cells[2].textContent.trim();
+                let brand = cells[3].textContent.toLowerCase();
+                let condition = cells[5].textContent.trim();
+
+                row.style.display = (
+                    (!sizeInput || size.includes(sizeInput)) &&
+                    (!brandInput || brand.includes(brandInput)) &&
+                    (!seasonInput || season === seasonInput) &&
+                    (!conditionInput || condition.toLowerCase() === conditionInput.toLowerCase())
+                ) ? "" : "none";
+            });
+        }
+
+        function debounce(func, delay) {
+            let timer;
+            return function() {
+                clearTimeout(timer);
+                timer = setTimeout(func, delay);
+            };
+        }
+
+        document.getElementById("searchSize").addEventListener("input", debounce(filterTable, 300));
+        document.getElementById("searchBrand").addEventListener("input", debounce(filterTable, 300));
+        document.getElementById("searchSeason").addEventListener("change", filterTable);
+        document.getElementById("searchCondition").addEventListener("change", filterTable);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchData();
+            setInterval(fetchData, 30000);
+        });
+    </script>
+</body>
+</html>
