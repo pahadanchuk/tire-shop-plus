@@ -10,6 +10,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tire Shop Plus</title>
     <style>
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column; /* Робить блоки вертикальними */
+        text-align: center;
+    }
+
+    .pricing-left, .pricing-right {
+        width: 100%; /* На телефоні блоки будуть займати всю ширину */
+        margin-bottom: 20px; /* Додає відступ між секціями */
+    }
+
+    .logo-container {
+        order: -1; /* Переміщує логотип на початок */
+        margin-bottom: 20px;
+    }
+
+    h3, h4 {
+        font-size: 18px; /* Менший заголовок */
+    }
+
+    .price {
+        font-size: 16px; /* Менший розмір цін */
+    }
+}
+
+    .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url("background.jpg"); /* Використай правильний фон */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.logo-container {
+    text-align: center;
+    flex: 1;
+}
+
+.logo {
+    max-width: 150px;
+}
+
+.pricing-left, .pricing-right {
+    width: 30%;
+    color: yellow;
+    text-align: center;
+}
+
+.pricing-left h3, .pricing-right h3, .pricing-right h4 {
+    text-transform: uppercase;
+    border-bottom: 2px solid yellow;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-weight: bold;
+}
         .table-container {
             width: 100%;
             overflow-x: auto; /* Додає горизонтальну прокрутку */
@@ -150,12 +211,40 @@
     </head>
     
 <body>
-    <header>
-        <h1 style="color: #FFD700; text-align: center; font-size: 32px; margin-bottom: 10px;">Tire Shop Plus</h1>
-        <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
-        <p>Tire Shop Plus - Best Tires at Affordable Prices</p>
-    </header>
+    <header class="header-container">
+        <div class="pricing-left">
+            <h3>With Purchase – Installation + Balancing</h3>
+            <p><strong>14”-16”</strong> – <span class="price">$25 ea | Set ($100)</span></p>
+            <p><strong>17”-18”</strong> – <span class="price">$27 ea | Set ($108)</span></p>
+            <p><strong>19”-22”</strong> – <span class="price">$29 ea | Set ($116)</span></p>
 
+            <h3>Only Balancing</h3>
+            <p><strong>14”-16”</strong> – <span class="price">$18 ea</span></p>
+            <p><strong>17”-18”</strong> – <span class="price">$22 ea</span></p>
+            <p><strong>19”-22”</strong> – <span class="price">$24 ea</span></p>
+        </div>
+    
+        <div class="logo-container">
+            <h1 style="color: #FFD700; text-align: center; font-size: 32px; margin-bottom: 10px;">
+                Tire Shop Plus
+            </h1>
+            <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
+            <p style="text-align: center;">Tire Shop Plus - Best Tires at Affordable Prices</p>
+        </div>
+    
+        <div class="pricing-right">
+            <h3>Installation + Balancing</h3>
+            <p><strong>14”-15”</strong> – <span class="price">$120</span></p>
+            <p><strong>16”-18”</strong> – <span class="price">$140</span></p>
+            <p><strong>19”-22”</strong> – <span class="price">$160</span></p>
+    
+            <h4>Trucks</h4>
+            <p><strong>16”-18”</strong> – <span class="price">$150</span></p>
+            <p><strong>20”-22”</strong> – <span class="price">$180</span></p>
+    
+          
+        </div>
+    </header>
     <div class="container">
         <h2>Search for Tires</h2>
         <div class="search-bar">
