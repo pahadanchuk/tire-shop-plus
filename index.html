@@ -1,20 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tire Shop Plus - Найкращі шини за доступними цінами. Купуйте нові та вживані шини у Едмонтоні.">
     <meta name="keywords" content="шини, автошини, купити шини, Edmonton, нові шини, вживані шини, Tire Shop Plus">
     <meta name="author" content="Tire Shop Plus">
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
     <title>Tire Shop Plus</title>
     <style>
+        @media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  h1, h2, .title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .logo {
+    display: block;
+    margin: 10px auto;
+    width: 70%;
+    max-width: 250px;
+  }
+
+  .search {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search input,
+  .search select {
+    width: 100%;
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    font-size: 14px;
+    border-collapse: collapse;
+  }
+
+  .table-container {
+    padding: 0 10px;
+}
+.logo-container img {
+    max-width: 100%;
+    height: auto;
+}
+.search-bar input,
+.search-bar select {
+    width: 100%;
+    box-sizing: border-box;
+}
+.container {
+    width: 90%;
+}
+  table th, table td {
+    white-space: nowrap;
+    padding: 8px 10px;
+  }
+
+  .prices {
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 10px;
+  }
+}
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column; /* Робить блоки вертикальними */
         text-align: center;
     }
+    .header-container {
+    display: flex;
+    flex-wrap: wrap;
+}
 
     .pricing-left, .pricing-right {
         width: 100%; /* На телефоні блоки будуть займати всю ширину */
