@@ -39,11 +39,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-image: url("background.jpg"); /* Використай правильний фон */
-    background-size: cover;
-    background-position: center;
+    background-color: rgba(0,0,0,0.6); /* напівпрозорий чорний */
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
+    backdrop-filter: blur(4px); /* ефект скла */
 }
 
 .logo-container {
@@ -97,10 +96,16 @@
             }
         }
     
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
+       body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('tire-bg.png'); /* або tire-bg.jpg */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: white;
+}
         header {
             background-color: #202123;
             color: #FFD700;
@@ -115,12 +120,18 @@
             padding: 10px;
         }
         .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border-radius: 5px;
-        }
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* напівпрозорий чорний */
+    border-radius: 10px;
+    color: white;
+    backdrop-filter: blur(4px); /* ефект скла */
+}
+.container th, .container td {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1); /* напівпрозорий фон комірок */
+}
         table {
             width: 100%;
             border-collapse: collapse;
