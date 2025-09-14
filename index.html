@@ -1,402 +1,748 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta name="description" content="Tire Shop Plus - Найкращі шини за доступними цінами. Купуйте нові та вживані шини у Едмонтоні.">
-    <meta name="keywords" content="шини, автошини, купити шини, Edmonton, нові шини, вживані шини, Tire Shop Plus">
-    <meta name="author" content="Tire Shop Plus">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tire Shop Plus</title>
+    <title>Tire Shop Plus Admin</title>
+    <meta name="robots" content="noindex, nofollow">
     <style>
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column; /* Робить блоки вертикальними */
-        text-align: center;
-    }
-
-    .pricing-left, .pricing-right {
-        width: 100%; /* На телефоні блоки будуть займати всю ширину */
-        margin-bottom: 20px; /* Додає відступ між секціями */
-    }
-
-    .logo-container {
-        order: -1; /* Переміщує логотип на початок */
-        margin-bottom: 20px;
-    }
-
-    h3, h4 {
-        font-size: 18px; /* Менший заголовок */
-    }
-
-    .price {
-        font-size: 16px; /* Менший розмір цін */
-    }
-}
-
-    .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0,0,0,0.6); /* напівпрозорий чорний */
-    padding: 20px;
-    border-radius: 10px;
-    backdrop-filter: blur(4px); /* ефект скла */
-}
-
-.logo-container {
+        .save-btn {
+    display: block;
+    margin: 20px auto; /* центрує по горизонталі */
+    background-color: green;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
     text-align: center;
-    flex: 1;
 }
-
-.logo {
-    max-width: 150px;
+.close-btn {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 10px;
 }
-
-.pricing-left, .pricing-right {
-    width: 30%;
+.calculator {
+    background-color: rgba(0, 0, 0, 0.8); /* чорний з прозорістю */
     color: yellow;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px;
+    margin: 20px auto;
+}
+table, .search-section {
+    background-color: rgba(20, 19, 19, 0.988); /* напівпрозорий чорний */
+    color: white;
+    border-collapse: collapse;
+    width: 90%;
+    margin: 20px auto;
+}
+
+table th, table td {
+    border: 1px solid white;
+    padding: 10px;
     text-align: center;
 }
+/* СТАРИЙ КОД - ВІН МІГ ЗМІНИТИ ТАБЛИЦЮ */
 
-.pricing-left h3, .pricing-right h3, .pricing-right h4 {
-    text-transform: uppercase;
-    border-bottom: 2px solid yellow;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+
+/* ВИПРАВЛЕНО: обмежуємо стилі тільки для калькулятора */
+.calculator input:not([type="radio"]), 
+.calculator select, 
+.calculator button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
 }
+.error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 2px;
+        text-align: left;
+    }
 
-.price {
+.calculator button {
+    background-color: yellow;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    padding: 10px;
     font-weight: bold;
 }
-        .table-container {
-            width: 100%;
-            overflow-x: auto; /* Додає горизонтальну прокрутку */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 14px; /* Менший розмір шрифту */
-            white-space: nowrap; /* Запобігає перенесенню тексту */
-        }
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 12px;
-                padding: 6px;
-            }
-            .table-container {
-                overflow-x: auto;
-            }
-        }
-    
-       body {
-    font-family: Arial, sans-serif;
+
+.calculator button:hover {
+    background-color: orange;
+}
+
+/* ====== МОБІЛЬНА ВЕРСІЯ ====== */
+@media (max-width: 768px) {
+    .calculator {
+        max-width: 100%;  /* Робимо калькулятор ширшим */
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px; /* Зменшуємо розмір заголовка */
+    }
+
+    input, select, button {
+        font-size: 14px;  /* Робимо текст меншим */
+        padding: 10px;
+    }
+
+    button {
+        font-size: 18px; /* Робимо кнопку більшою */
+        padding: 12px;
+    }
+
+    #quantityOptions {
+    display: flex; /* Розташовуємо кнопки в один ряд */
+    justify-content: center; /* Центруємо */
+    align-items: center;
+    gap: 15px; /* Відстань між кнопками */
+    margin: 10px 0; /* Відступи */
+}
+
+#quantityOptions label {
+    background: yellow;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid black;
+    min-width: 40px;
     text-align: center;
-    background-image: url('tire-bg.png'); /* або tire-bg.jpg */
+}
+
+#quantityOptions input {
+    display: none; /* Приховуємо стандартні радіокнопки */
+}
+
+#quantityOptions label:hover {
+    background: orange;
+}
+
+#quantityOptions input:checked + label {
+    background: red;
+    color: white;
+}
+}
+
+        .table-container { width: 100%; overflow-x: hidden; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 20px;}
+        th, td { padding: 4px; border: 1px solid #ddd; text-align: center; font-size: 12px; white-space: normal; word-wrap: break-word;min-width: 70px;max-width: 120px;}
+        body {
+    background: url('technician.jpg') no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
-        header {
-            background-color: #202123;
-            color: #FFD700;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .logo {
-            max-width: 200px;
-            display: block;
-            margin: 0 auto;
-            padding: 10px;
-        }
-        .container {
-    max-width: 1000px;
-    margin: 20px auto;
+/* Прибрати білий або сірий фон */
+main, .container, .wrapper {
+    background: transparent !important;
+}
+
+/* Прозорий калькулятор */
+.calculator {
+    background-color: rgba(0, 0, 0, 0.7); /* Прозорий чорний */
+    color: yellow;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.6); /* напівпрозорий чорний */
-    border-radius: 10px;
-    color: white;
-    backdrop-filter: blur(4px); /* ефект скла */
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px;
+    margin: 20px auto;
 }
-.container th, .container td {
+
+/* Прозорий блок таблиці */
+.search-section, table {
+    background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    background-color: rgba(255, 255, 255, 0.1); /* напівпрозорий фон комірок */
 }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        th {
-            background-color: #FFD700;
-        }
-        input, select, button {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 10px;
-            border: 1px solid #000;
-        }
-        button {
-            background-color: #FFD700;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .contact-info {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: black;
-            color: #FFD700;
-            border-radius: 5px;
-        }
-        .contact-info p, .contact-info a {
-            margin: 5px 0;
-            color: #FFD700;
-            font-size: 16px;
-        }
-        .footer {
-            background-color: black;
-            color: #FFD700;
-            padding: 10px;
-            font-size: 14px;
-        }
-        @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 8px;
-            }
-        }
-        .contact-phone {
-  color: #FFD700; /* жовтий */
-  text-decoration: none;
+
+/* Якщо форма зверху біла — зроби прозорою */
+form {
+    background: transparent !important;
+}
+header {
+  background-color: transparent;
+  color: #FF0000;
+  padding: 20px;
+  font-size: 24px;
   font-weight: bold;
 }
-
-.contact-phone:hover {
-  color: #FF0000; /* червоний при наведенні */
-  text-decoration: underline;
-}
+        .container { max-width: 90vw; margin: auto; padding: 10px; background-color: #f4f4f4; border-radius: 5px; }
+        th { background-color: #FF0000; color: white; }
+        .add-btn { width: 150px; padding: 8px; font-size: 16px; background-color: #FF0000; color: white; cursor: pointer; border: none; border-radius: 5px; }
+        .form-container { display: none; margin-top: 20px; padding: 10px; background-color: #ddd; border-radius: 5px; }
+        .form-container input, .form-container select { margin: 5px; padding: 8px; width: calc(100% - 20px); }
+        .save-btn { background-color: green; color: white; padding: 10px; cursor: pointer; border: none; border-radius: 5px; font-size: 16px; }
+        .logo { display: block; margin: 0 auto; width: 150px; height: auto; }
     </style>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Tire Shop Plus",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "12530 118 Ave NW",
-        "addressLocality": "Edmonton",
-        "addressRegion": "AB",
-        "postalCode": "T5L 2K6",
-        "addressCountry": "CA"
-      },
-      "telephone": "+1 (780) 455-7467",
-      "url": "https://yourwebsite.com"
-    }
-    </script>
-
-
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://tireshopplus.ca/">
-
-    <!-- Open Graph for Facebook, Instagram, etc. -->
-    <meta property="og:title" content="Tire Shop Plus">
-    <meta property="og:description" content="Найкращі шини за доступними цінами в Едмонтоні. Нові та вживані шини.">
-    <meta property="og:image" content="https://tireshopplus.ca/logo.png">
-    <meta property="og:url" content="https://tireshopplus.ca/">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tire Shop Plus">
-    <meta name="twitter:description" content="Найкращі шини за доступними цінами в Едмонтоні. Нові та вживані шини.">
-    <meta name="twitter:image" content="https://tireshopplus.ca/logo.png">
-    </head>
-    
+</head>
 <body>
-    <header class="header-container">
-        <div class="pricing-left">
-            <h3>With Purchase – Installation + Balancing</h3>
-            <p><strong>14”-16”</strong> – <span class="price">$25 ea | Set ($100)</span></p>
-            <p><strong>17”-18”</strong> – <span class="price">$27 ea | Set ($108)</span></p>
-            <p><strong>19”-22”</strong> – <span class="price">$29 ea | Set ($116)</span></p>
+    <header>
+        <img src="logo2.png" alt="Tire Shop Plus Logo" class="logo">
+        <h2 style="color: #FF0000; text-align: center;">Admin</h2>
+       
+       <!-- Кнопка відкриття калькулятора -->
 
-            <h3>Only Balancing</h3>
-            <p><strong>14”-16”</strong> – <span class="price">$18 ea</span></p>
-            <p><strong>17”-18”</strong> – <span class="price">$22 ea</span></p>
-            <p><strong>19”-22”</strong> – <span class="price">$24 ea</span></p>
-        </div>
-    
-        <div class="logo-container">
-            <h1 style="color: #FFD700; text-align: center; font-size: 32px; margin-bottom: 10px;">
-                Tire Shop Plus
-            </h1>
-            <img src="logo.png" alt="Tire Shop Plus Logo" class="logo">
-            <p style="text-align: center;">Tire Shop Plus - Best Tires at Affordable Prices</p>
-        </div>
-    
-        <div class="pricing-right">
-            <h3>Installation + Balancing</h3>
-            <p><strong>14”-15”</strong> – <span class="price">$120</span></p>
-            <p><strong>16”-18”</strong> – <span class="price">$140</span></p>
-            <p><strong>19”-22”</strong> – <span class="price">$160</span></p>
-    
-            <h4>Trucks</h4>
-            <p><strong>16”-18”</strong> – <span class="price">$150</span></p>
-            <p><strong>20”-22”</strong> – <span class="price">$180</span></p>
-    
-          
-        </div>
     </header>
+    <div id="loader" style="display:none; text-align: center; margin: 20px;">
+        <img src="loader.gif" alt="Loading..." style="width: 150px;">
+    </div>
+    <!-- Кнопка відкриття калькулятора -->
+<div style="text-align:center; margin-top: 20px;">
+    <button onclick="openCalculator()" style="background: none; border: none; cursor: pointer;">
+        <img src="calculator-icon.png" alt="Calculator" width="50">
+    </button>
+</div>
+
+<!-- Сам калькулятор -->
+<div id="calculator" class="calculator" style="display: none; position: relative;">
+    <!-- Хрестик -->
+    <button onclick="closeCalculator()" style="
+    position: absolute;
+    top: 5px;
+    left: 180px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+">&times;</button>
+
+    <h2>Tire Price Calculator</h2>
+    <label>Enter tire price ($):</label>
+    <input type="number" id="tirePrice" placeholder="88">
+
+    <label>Select quantity:</label>
+    <div id="quantityOptions">
+        <label for="qty1"><input type="radio" id="qty1" name="quantity" value="1" checked>1</label>
+        <label for="qty2"><input type="radio" id="qty2" name="quantity" value="2">2</label>
+        <label for="qty3"><input type="radio" id="qty3" name="quantity" value="3">3</label>
+        <label for="qty4"><input type="radio" id="qty4" name="quantity" value="4">4</label>
+        <label for="qty5"><input type="radio" id="qty5" name="quantity" value="5">5</label>
+        <label for="qty6"><input type="radio" id="qty6" name="quantity" value="6">6</label>
+    </div>
+
+    <label>Select size:</label>
+    <select id="calc_size">
+        <option value="25">14"-16"</option>
+        <option value="27">17"-18"</option>
+        <option value="29">19"-22"</option>
+    </select>
+
+    <label>New or Used:</label>
+    <select id="calc_condition">
+        <option value="used">Used</option>
+        <option value="new">New (+$5 each)</option>
+    </select>
+
+    <button onclick="calculateTotal()">Calculate</button>
+
+    <h3>Full Price: $<span id="fullPrice">0.00</span></h3>
+    <h3>GST (5%): $<span id="gstPrice">0.00</span></h3>
+    <h3>Total Price: $<span id="totalPrice">0.00</span></h3>
+</div>
     <div class="container">
-        <h2>Search for Tires</h2>
-        <div class="search-bar">
-            <input type="text" id="searchSize" placeholder="Enter size (e.g., 205/55R16)">
-            <input type="text" id="searchBrand" placeholder="Enter brand (e.g., Michelin)">
-            <select id="searchSeason">
-                <option value="">Select Season</option>
+        <h2 style="color: orange; text-align: center;">Search for Tires</h2>
+        <!-- КНОПКА ОЧИСТКИ ЗЛІВА -->
+        <!-- 🔍 Пошук і кнопки в одному рядку -->
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-start; margin-bottom: 20px;">
+    <!-- 🗑 Кнопка смітника перед size -->
+    <button onclick="clearFilters()" style="
+        background-color: red;
+        color: white;
+        padding: 8px 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;">
+        🗑
+    </button>
+
+    <!-- Поля фільтрації -->
+    <input type="text" id="searchSize" placeholder="Enter size" oninput="filterTable()">
+    <input type="text" id="searchBrand" placeholder="Enter brand" oninput="filterTable()">
+    <input type="text" id="searchNumber" placeholder="Search by # (number)" oninput="filterTable()">
+    <input type="text" id="searchLocation" placeholder="Enter location" oninput="filterTable()">
+
+    <select id="searchPieces" onchange="filterTable()">
+        <option value="">Select Pieces</option>
+        ${Array.from({ length: 21 }, (_, i) => `<option value="${i}">${i}</option>`).join('')}
+    </select>
+
+    <select id="searchSeason" onchange="filterTable()">
+        <option value="">Select Season</option>
+        <option value="A/T">A/T</option>
+        <option value="A/S">A/S</option>
+        <option value="A/W">A/W</option>
+        <option value="Wint">Wint</option>
+        <option value="M/T">M/T</option>
+    </select>
+
+    <select id="searchCondition" onchange="filterTable()">
+        <option value="">Select Condition</option>
+        <option value="New">New</option>
+        <option value="Used">Used</option>
+    </select>
+
+    <!-- ➕ Кнопка Add після select -->
+    
+</div>
+        <!-- Add Button окремо по центру -->
+<div style="text-align: center; margin-bottom: 20px;">
+    <button class="add-btn" onclick="toggleForm()" style="
+        background-color: red;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;">
+        + Add
+    </button>
+</div>
+        <div id="addForm" class="form-container">
+            <input type="text" id="size" placeholder="Size">
+            <input type="text" id="price" placeholder="Price">
+            <select id="season">
+                <option value="">Season</option>
                 <option value="A/T">A/T</option>
                 <option value="A/S">A/S</option>
                 <option value="Wint">Wint</option>
                 <option value="M/T">M/T</option>
                 <option value="A/W">A/W</option>
             </select>
-            <select id="searchCondition">
+            <input type="text" id="brand" placeholder="Brand/Model">
+            <input type="text" id="pieces" placeholder="Pieces">
+            <select id="condition">
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
                 <option value="Used">Used</option>
             </select>
+            <input type="text" id="location" placeholder="Location">
+            <input type="text" id="number" placeholder="#">
+            <button class="save-btn" onclick="addTire()">Done</button>
+            <button class="close-btn" onclick="closeForm()">Close</button>
         </div>
 
-        <div class="table-container"><table id="tireTable">
-            <thead>
-                <tr>
-                    <th>Size</th>
-                    <th>Price</th>
-                    <th>Season</th>
-                    <th>Brand/Model</th>
-                    <th>Pieces</th>
-                    <th>New/Used</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be inserted here -->
-            </tbody>
-        </table></div>
-    </div>
-
-    <div class="contact-info">
-        <h2>Contact Us</h2>
-        <p>
-  <a class="contact-phone" href="tel:+17805551234">📞 +1 (780) 555-1234</a>
-</p>
-        <p>📧 <a href="mailto:tireshopplus@gmail.com">tireshopplus@gmail.com</a></p>
-        <p>⏰ <strong>Hours:</strong> Mon-Fri 8:30 AM - 5:00 PM | Sat 8:30 AM - 3:00 PM</p>
-    </div>
-
-    <div class="footer">
-        © 2024 Tire Shop Plus | 12530 118 Ave NW, Edmonton, AB T5L 2K6, Canada
+        <div class="table-container">
+            <table id="tireTable">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Season</th>
+                        <th>Brand/Model</th>
+                        <th>Pieces</th>
+                        <th>New/Used</th>
+                        <th>Location</th>
+                        <th>#</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        const sheetId = "1mb7eqn7MW6A0OqTGpLzyf29ttp9L-fLV4bclCNxqpCU";
-        const apiKey = "AIzaSyCKt60wvUw8DnN3aCUxKeko9fFlhiR_n8Y";
-        const range = "Sheet1!A2:G";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx12uIOXUF5zGP-3ZHQ2WY1l4PR3gpUK6aZlzqawAd6nclWAZStjlCucTCVZM-GAAIrfQ/exec";
 
-        async function fetchData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+        function toggleForm() {
+            const form = document.getElementById("addForm");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
 
-            try {
-                const response = await fetch(url, { cache: "no-store" });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                renderTable(data.values);
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            if (form.style.display === "block") {
+                document.querySelectorAll("#addForm input, #addForm select").forEach(el => el.value = "");
             }
         }
+        function closeForm() {
+    const form = document.getElementById("addForm");
+    form.style.display = "none";
+}
+        async function addTire() {
+    const fields = ["size", "price", "season", "brand", "pieces", "condition", "location"];
+    let formData = { action: "add" };
+    let isValid = true;
 
-        function renderTable(rows) {
-            let tableBody = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
-            tableBody.innerHTML = "";
-            let fragment = document.createDocumentFragment();
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        const value = el.value.trim();
+        formData[id] = value;
 
-           for (let j = 0; j < rows.length; j++) {
-    let tr = document.createElement("tr");
-    for (let i = 0; i < rows[j].length; i++) {
-        let td = document.createElement("td");
-        td.textContent = rows[j][i];
-        tr.appendChild(td);
-    }
-    fragment.appendChild(tr);
+        // Очистити попередню помилку
+        el.style.border = "";
+        const existingError = el.nextElementSibling;
+        if (existingError && existingError.classList.contains("error-message")) {
+            existingError.remove();
+        }
+
+        // Якщо порожнє
+        if (!value) {
+            el.style.border = "2px solid red";
+            const msg = document.createElement("div");
+            msg.className = "error-message";
+            msg.textContent = "This field is required";
+            el.parentNode.insertBefore(msg, el.nextSibling);
+            isValid = false;
+        }
+
+        // Вибір шаблону
+        let pattern = null;
+        if (id === "pieces" || id === "price") {
+    pattern = /^[a-zA-Z0-9]+$/;
+} else if (id !== "season") {
+    pattern = /^[a-zA-Z0-9]+$/;
 }
 
-            tableBody.appendChild(fragment);
-            filterTable();
+        // Перевірка символів
+        if (pattern && value && !pattern.test(value)) {
+            el.style.border = "2px solid red";
+            const msg = document.createElement("div");
+            msg.className = "error-message";
+            msg.textContent = "Only letters and numbers allowed (no spaces or symbols)";
+            el.parentNode.insertBefore(msg, el.nextSibling);
+            isValid = false;
         }
 
-        function filterTable() {
-            let sizeInput = document.getElementById("searchSize").value.toLowerCase();
-            let brandInput = document.getElementById("searchBrand").value.toLowerCase();
-            let seasonInput = document.getElementById("searchSeason").value;
-            let conditionInput = document.getElementById("searchCondition").value;
+        // Live перевірка
+        el.addEventListener("input", () => {
+            const val = el.value.trim();
+            const next = el.nextElementSibling;
+            const passesRequired = val !== "";
+            const passesPattern = !pattern || pattern.test(val);
 
-            let rows = document.querySelectorAll("#tireTable tbody tr");
-
-            rows.forEach(row => {
-                let cells = row.getElementsByTagName("td");
-                let size = cells[0].textContent.toLowerCase();
-                let season = cells[2].textContent.trim();
-                let brand = cells[3].textContent.toLowerCase();
-                let condition = cells[5].textContent.trim();
-
-                row.style.display = (
-                    (!sizeInput || size.includes(sizeInput)) &&
-                    (!brandInput || brand.includes(brandInput)) &&
-                    (!seasonInput || season === seasonInput) &&
-                    (!conditionInput || condition.toLowerCase() === conditionInput.toLowerCase())
-                ) ? "" : "none";
-            });
-        }
-
-        function debounce(func, delay) {
-            let timer;
-            return function() {
-                clearTimeout(timer);
-                timer = setTimeout(func, delay);
-            };
-        }
-
-        document.getElementById("searchSize").addEventListener("input", debounce(filterTable, 300));
-        document.getElementById("searchBrand").addEventListener("input", debounce(filterTable, 300));
-        document.getElementById("searchSeason").addEventListener("change", filterTable);
-        document.getElementById("searchCondition").addEventListener("change", filterTable);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            fetchData();
-            setInterval(fetchData, 30000);
+            if (passesRequired && passesPattern) {
+                el.style.border = "";
+                if (next && next.classList.contains("error-message")) next.remove();
+            } else {
+                el.style.border = "2px solid red";
+                if (!next || !next.classList.contains("error-message")) {
+                    const msg = document.createElement("div");
+                    msg.className = "error-message";
+                    msg.textContent = !passesRequired
+                        ? "This field is required"
+                        : (id === "price" || id === "pieces")
+                            ? "Only numbers allowed"
+                            : "Only letters and numbers allowed (no spaces or symbols)";
+                    el.parentNode.insertBefore(msg, el.nextSibling);
+                }
+            }
         });
+    });
+
+    // # — не обов’язкове
+    formData["number"] = document.getElementById("number").value.trim();
+
+    if (!isValid) {
+        alert("Please fix the errors before submitting.");
+        return;
+    }
+    document.getElementById("loader").style.display = "block";
+    await fetch(WEB_APP_URL, {
+        method: "POST",
+        body: new URLSearchParams(formData)
+    });
+    document.getElementById("loader").style.display = "none";
+    alert("Added successfully!");
+    loadData();
+    toggleForm();
+}
+
+        async function deleteRow(size, brand, location, pieces) {
+    console.log("Attempting to delete:", size, brand, location, pieces); // Додаємо лог
+    document.getElementById("loader").style.display = "block";
+    let response = await fetch(WEB_APP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ 
+            action: "delete", 
+            size: size, 
+            brand: brand, 
+            location: location, 
+            pieces: pieces
+        })
+    });
+
+    let result = await response.text();
+    console.log("Server response:", result); // Логуємо відповідь сервера
+
+    if (result.includes("Deleted")) {
+        alert("Deleted successfully!");
+        loadData();
+        document.getElementById("loader").style.display = "none";
+    } else {
+        alert("Error deleting tire: " + result);
+    }
+}
+async function loadData() {
+    let response = await fetch(WEB_APP_URL);
+    let data = await response.json();
+
+    // Сортуємо так, щоб записи з номером були зверху, а без номера залишалися внизу
+    data.sort((a, b) => {
+        let numA = a["#"] ? Number(a["#"]) : -Infinity;
+        let numB = b["#"] ? Number(b["#"]) : -Infinity;
+        return numB - numA;
+    });
+
+    let table = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+    table.innerHTML = "";
+
+    data.forEach(row => {
+        let tr = document.createElement("tr");
+
+        ["SIZE", "Price", "Season", "Brand", "Pieces", "New/Used", "location", "#"].forEach(col => {
+            let td = document.createElement("td");
+            td.textContent = row[col] || "-";
+            td.setAttribute("data-col", col);
+            tr.appendChild(td);
+        });
+
+        let actionTd = document.createElement("td");
+
+        // Кнопка редагування (✏️)
+        let editBtn = document.createElement("button");
+        editBtn.textContent = "✏️";
+        editBtn.onclick = () => editRow(tr, row);
+        
+        // Кнопка видалення (🗑)
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑";
+        deleteBtn.onclick = () => deleteRow(row["SIZE"], row["Brand"], row["location"], row["Pieces"]);
+
+        actionTd.appendChild(editBtn);
+        actionTd.appendChild(deleteBtn);
+        tr.appendChild(actionTd);
+
+        table.appendChild(tr);
+    });
+}
+function editRow(rowElement, oldRowData) {
+    let table = document.getElementById("tireTable");
+    let tableWidth = table.offsetWidth; // Запам’ятовуємо ширину таблиці
+    let tableHeight = table.offsetHeight; // Запам’ятовуємо висоту таблиці
+
+    // Фіксуємо розмір таблиці перед редагуванням
+    table.style.width = tableWidth + "px";
+    table.style.height = tableHeight + "px";
+    table.style.tableLayout = "fixed"; 
+
+    let cells = rowElement.getElementsByTagName("td");
+    let actionTd = rowElement.lastChild;
+
+    // Прибираємо старі кнопки
+    actionTd.innerHTML = "";
+
+    // Перетворюємо комірки в поля введення
+    let updatedData = {};
+    for (let i = 0; i < cells.length - 1; i++) {
+        let colName = cells[i].getAttribute("data-col");
+        let input = document.createElement("input");
+        input.value = cells[i].textContent.trim();
+        input.style.width = "100%"; // Щоб поле не виходило за розміри комірки
+
+        cells[i].textContent = "";
+        cells[i].appendChild(input);
+
+        input.oninput = () => updatedData[colName] = input.value.trim();
+    }
+
+    // Кнопка "Зберегти" (✅)
+    let saveBtn = document.createElement("button");
+    saveBtn.textContent = "✅";
+    saveBtn.onclick = async () => {
+        await saveEditedRow(rowElement, oldRowData, updatedData);
+        table.style.width = ""; // Скидаємо фіксацію ширини
+        table.style.height = ""; // Скидаємо фіксацію висоти
+    };
+
+    actionTd.appendChild(saveBtn);
+}
+async function saveEditedRow(rowElement, oldRowData, updatedData) {
+    console.log("Old Data:", oldRowData);
+    console.log("Updated Data:", updatedData);
+
+    let table = document.getElementById("tireTable");
+
+    // Видаляємо старий запис
+    document.getElementById("loader").style.display = "block";
+    let deleteResponse = await fetch(WEB_APP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            action: "delete",
+            size: oldRowData["SIZE"],
+            brand: oldRowData["Brand"],
+            location: oldRowData["location"],
+            pieces: oldRowData["Pieces"]
+        })
+    });
+
+    let deleteResult = await deleteResponse.text();
+    console.log("Delete Response:", deleteResult);
+
+    if (deleteResult.includes("Deleted")) {
+        // Додаємо оновлений запис
+        let addResponse = await fetch(WEB_APP_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                action: "add",
+                size: updatedData["SIZE"] || oldRowData["SIZE"],
+                price: updatedData["Price"] || oldRowData["Price"],
+                season: updatedData["Season"] || oldRowData["Season"],
+                brand: updatedData["Brand"] || oldRowData["Brand"],
+                pieces: updatedData["Pieces"] || oldRowData["Pieces"],
+                condition: updatedData["New/Used"] || oldRowData["New/Used"],
+                location: updatedData["location"] || oldRowData["location"],
+                number: updatedData["#"] || oldRowData["#"]
+            })
+        });
+
+        let addResult = await addResponse.text();
+        console.log("Add Response:", addResult);
+
+        if (addResult.includes("Success")) {
+            alert("Updated successfully!");
+
+            // Оновлюємо тільки таблицю, без зміщення
+            await loadData();
+            document.getElementById("loader").style.display = "none";
+
+            // Скидаємо розмір таблиці
+            table.style.width = "";
+            table.style.height = "";
+        } else {
+            alert("Error adding updated data: " + addResult);
+        }
+    } else {
+        alert("Error deleting old data: " + deleteResult);
+    }
+}
+
+function filterTable() {
+    let size = document.getElementById("searchSize").value.toLowerCase();
+    let brand = document.getElementById("searchBrand").value.toLowerCase();
+    let number = document.getElementById("searchNumber").value.toLowerCase();
+    let pieces = document.getElementById("searchPieces").value.toLowerCase();
+    let season = document.getElementById("searchSeason").value.toLowerCase();
+    let condition = document.getElementById("searchCondition").value.toLowerCase();
+    let location = document.getElementById("searchLocation").value.toLowerCase();
+
+    let table = document.getElementById("tireTable").getElementsByTagName("tbody")[0];
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        let cols = rows[i].getElementsByTagName("td");
+        if (cols.length > 0) {
+            let sizeText = cols[0].textContent.toLowerCase();
+            let priceText = cols[1].textContent.toLowerCase();
+            let seasonText = cols[2].textContent.toLowerCase();
+            let brandText = cols[3].textContent.toLowerCase();
+            let piecesText = cols[4].textContent.toLowerCase();
+            let conditionText = cols[5].textContent.toLowerCase();
+            let locationText = cols[6].textContent.toLowerCase();
+            let numberText = cols[7].textContent.toLowerCase();
+
+            if (
+                (size === "" || sizeText.includes(size)) &&
+                (brand === "" || brandText.includes(brand)) &&
+                (number === "" || numberText === number) &&
+                (pieces === "" || piecesText.includes(pieces)) &&
+                (season === "" || seasonText.includes(season)) &&
+                (condition === "" || conditionText.includes(condition)) &&
+                (location === "" || locationText.startsWith(location))
+            ) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+}
+        window.onload = () => {
+            loadData();
+            document.getElementById("searchPieces").innerHTML += Array.from({ length: 21 }, (_, i) => `<option value="${i}">${i}</option>`).join('');
+        };
     </script>
+    <script>
+        function updateQuantity() {
+            document.getElementById("quantityValue").textContent = document.getElementById("quantity").value;
+        }
+        
+        function calculateTotal() {
+            let tirePrice = parseFloat(document.getElementById("tirePrice").value);
+            let quantity = parseInt(document.querySelector('input[name="quantity"]:checked').value);
+            let sizePrice = parseInt(document.getElementById("calc_size").value);
+        let condition = document.getElementById("calc_condition").value;
+        
+            if (isNaN(tirePrice) || tirePrice <= 0) {
+                alert("Please enter a valid tire price.");
+                return;
+            }
+        
+            // Базова ціна шин
+            let basePrice = tirePrice * quantity;
+        
+            // Додаємо ціну за встановлення залежно від розміру
+            let installationPrice = sizePrice * quantity;
+        
+            // Якщо нові - додаємо по $5 за кожну шину
+            let extraNewTireCharge = (condition === "new") ? quantity * 5 : 0;
+        
+            // Підраховуємо загальну суму
+            let fullPrice = basePrice + installationPrice + extraNewTireCharge;
+        
+            // Розраховуємо GST (5%)
+            let gst = fullPrice * 0.05;
+            let totalPrice = fullPrice + gst;
+        
+            // Виводимо значення
+            document.getElementById("fullPrice").textContent = fullPrice.toFixed(2);
+            document.getElementById("gstPrice").textContent = gst.toFixed(2);
+            document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+        }
+        function clearFilters() {
+    document.getElementById("searchSize").value = "";
+    document.getElementById("searchBrand").value = "";
+    document.getElementById("searchNumber").value = "";
+    document.getElementById("searchLocation").value = "";
+    document.getElementById("searchPieces").value = "";
+    document.getElementById("searchSeason").value = "";
+    document.getElementById("searchCondition").value = "";
+
+    filterTable(); // Оновлює таблицю без фільтрів
+}
+
+        </script>
+    
+    <script>
+        function openCalculator() {
+            document.getElementById("calculator").style.display = "block";
+        }
+        
+        function closeCalculator() {
+            document.getElementById("calculator").style.display = "none";
+        }
+        
+        </script>    
 </body>
 </html>
